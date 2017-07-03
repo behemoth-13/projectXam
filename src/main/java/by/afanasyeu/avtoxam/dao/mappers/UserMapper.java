@@ -16,6 +16,39 @@ public interface UserMapper {
         @Options(useGeneratedKeys=true, keyProperty="id", flushCache=Options.FlushCachePolicy.DEFAULT, keyColumn="id")
         void insertUser(User user);
 
+        @Select("SELECT if(COUNT(*)>0,'true','false') FROM user WHERE login = #{login}")
+        Boolean isExistLogin(String login);
+
+        @Update("UPDATE user SET login = #{newLogin} " +
+                "WHERE login = #{oldLogin}")
+        void updateLogin(@Param("oldLogin") String oldLogin, @Param("newLogin") String newLogin);
+
+        @Update("UPDATE user SET region = #{region} " +
+                "WHERE login = #{login}")
+        void updateRegion(@Param("login") String login, @Param("region") Integer region);
+
+        @Update("UPDATE user SET password = #{newPassword} " +
+                "WHERE login = #{login}")
+        void updatePassword(@Param("login") String login, @Param("newPassword") String newPassword);
+
+        @Delete("DELETE FROM user WHERE login = #{login}")
+        void deleteUserByLogin(String login);
+
+        @Select("SELECT if(COUNT(*)>0,'true','false') FROM user " +
+                "WHERE login = #{login} AND password = #{password}")
+        Boolean isExistUser(@Param("login") String login, @Param("newPassword") String password);
+
+        @Select("SELECT id as id, region as region, login as login, reg_date as regDate FROM user " +
+                "WHERE login = #{login}")
+//        @Results(value={
+//                @Result(property="teacherId", column ="teacher_id" )
+//        })
+        User getUserWithoutPasswordByLogin(String login);
+
+
+
+
+
         @Select("SELECT * FROM student WHERE teacher_id = #{id}")
         @Results(value={
                 @Result(property="teacherId", column ="teacher_id" )

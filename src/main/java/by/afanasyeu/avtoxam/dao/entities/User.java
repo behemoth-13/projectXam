@@ -55,5 +55,14 @@ public class User {
         this.regDate = regDate;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", region=" + region +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", regDate=" + regDate +
+                '}';
+    }
 }
