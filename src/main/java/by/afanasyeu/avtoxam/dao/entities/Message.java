@@ -10,7 +10,8 @@ public class Message {
     private Long userId;
     private Date dateMessage;
     private String message;         //от 1 до 2048 символов
-    private Integer countlike;      //нет в бд
+    private String userLogin;       //нет в бд
+    private Integer countLike;      //нет в бд
     private Integer countDislike;   //нет в бд
     private Integer countComment;   //нет в бд
     private Character status;       //нет в бд
@@ -57,12 +58,20 @@ public class Message {
         this.message = message;
     }
 
-    public Integer getCountlike() {
-        return countlike;
+    public String getUserLogin() {
+        return userLogin;
     }
 
-    public void setCountlike(Integer countlike) {
-        this.countlike = countlike;
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
+
+    public Integer getCountLike() {
+        return countLike;
+    }
+
+    public void setCountLike(Integer countLike) {
+        this.countLike = countLike;
     }
 
     public Integer getCountDislike() {

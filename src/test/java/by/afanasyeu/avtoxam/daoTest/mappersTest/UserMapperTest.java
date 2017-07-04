@@ -1,5 +1,6 @@
 package by.afanasyeu.avtoxam.daoTest.mappersTest;
 
+import by.afanasyeu.avtoxam.dao.entities.DTO.UserDTO;
 import by.afanasyeu.avtoxam.dao.entities.User;
 import by.afanasyeu.avtoxam.dao.mappers.UserMapper;
 
@@ -62,8 +63,8 @@ public class UserMapperTest {
     }
 
     @Test
-    public void getUserWithoutPasswordByLoginTest() {
-        User user = userMapper.getUserWithoutPasswordByLogin("testLogin");
-        System.out.println(user);
+    public void getUserDTOTest() {
+        UserDTO userDTO = userMapper.getUserDTO("testLogin");
+        System.out.println(userDTO);
     }
 }

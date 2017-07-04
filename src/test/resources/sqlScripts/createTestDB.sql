@@ -29,14 +29,14 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `xamTest`.`region` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `counry_id` INT UNSIGNED NOT NULL,
+  `country_id` INT UNSIGNED NOT NULL,
   `region` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_country_id_idx` (`counry_id` ASC),
+  INDEX `fk_country_id_idx` (`country_id` ASC),
   CONSTRAINT `fk_region_country_id`
-    FOREIGN KEY (`counry_id`)
+    FOREIGN KEY (`country_id`)
     REFERENCES `xamTest`.`country` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
