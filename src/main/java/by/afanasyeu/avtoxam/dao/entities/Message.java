@@ -10,18 +10,6 @@ public class Message {
     private Long userId;
     private Date dateMessage;
     private String message;         //от 1 до 2048 символов
-    private String userLogin;       //нет в бд
-    private Integer countLike;      //нет в бд
-    private Integer countDislike;   //нет в бд
-    private Integer countComment;   //нет в бд
-    private Character status;       //нет в бд
-    /*status
-    null - лайк нет, дизлайк нет, избранное нет;
-    a - лайк нет, дизлайк нет, избранное да;
-    b - лайк нет, дизлайк да, избранное нет;
-    c - лайк нет, дизлайк да, избранное да;
-    d - лайк да, дизлайк нет, избранное нет;
-    e - лайк да, дизлайк нет, избранное да;*/
 
     public Message() {
     }
@@ -56,45 +44,5 @@ public class Message {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public String getUserLogin() {
-        return userLogin;
-    }
-
-    public void setUserLogin(String userLogin) {
-        this.userLogin = userLogin;
-    }
-
-    public Integer getCountLike() {
-        return countLike;
-    }
-
-    public void setCountLike(Integer countLike) {
-        this.countLike = countLike;
-    }
-
-    public Integer getCountDislike() {
-        return countDislike;
-    }
-
-    public void setCountDislike(Integer countDislike) {
-        this.countDislike = countDislike;
-    }
-
-    public Integer getCountComment() {
-        return countComment;
-    }
-
-    public void setCountComment(Integer countComment) {
-        this.countComment = countComment;
-    }
-
-    public Character getStatus() {
-        return status;
-    }
-
-    public void setStatus(Character status) {
-        this.status = status;
     }
 }

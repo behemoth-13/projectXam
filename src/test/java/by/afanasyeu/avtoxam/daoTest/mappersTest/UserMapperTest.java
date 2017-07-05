@@ -8,6 +8,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -27,29 +28,27 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring-test-config.xml" })
-//@Sql(
-//        scripts = "classpath:sqlScripts/deleteData-InsertData-testUserMapper.sql",
-//        config = @SqlConfig(transactionMode = ISOLATED),
-//        executionPhase = BEFORE_TEST_METHOD
-//)
+@Sql(
+        scripts = "classpath:sqlScripts/deleteData-InsertData-testUserMapper.sql",
+        config = @SqlConfig(transactionMode = ISOLATED),
+        executionPhase = BEFORE_TEST_METHOD
+)
 public class UserMapperTest {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Test
-    //@Ignore
     public void insertUserTest() {
         User u = new User();
         u.setLogin("testLogin");
         u.setRegDate(new Date());
         u.setPassword("testPassword");
-        u.setRegion(1);
-        if (userMapper == null) {
-            System.out.println("hey");
-        }
+        u.setRegion(4);
         userMapper.insertUser(u);
-        assertEquals(2, 1 + 1);
+        System.out.println((Integer) jdbcTemplate.queryForObject("SELECT COUNT(id) FROM user", null, Integer.class));
     }
 
     @Test

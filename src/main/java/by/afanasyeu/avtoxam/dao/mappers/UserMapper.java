@@ -36,17 +36,9 @@ public interface UserMapper {
         @Select("SELECT if(COUNT(*)>0,'true','false') FROM user WHERE login = #{login} AND password = #{password}")
         Boolean isExistUser(@Param("login") String login, @Param("newPassword") String password);
 
-        @Select("SELECT c.country as country, r.region as region, login as login, reg_date as regDate " +
-                "FROM user u JOIN region r " +
-                "on u.region = r.id join country c on r.country_id = c.id " +
+        @Select("SELECT c.country AS country, r.region AS region, login AS login, reg_date AS regDate " +
+                "FROM user AS u JOIN region AS r " +
+                "ON u.region = r.id JOIN country c ON r.country_id = c.id " +
                 "WHERE login = #{login}")
         UserDTO getUserDTO(String login);
 }
-/*SELECT p.Name, v.Name
-FROM Production.Product p
-JOIN Purchasing.ProductVendor pv
-ON p.ProductID = pv.ProductID
-JOIN Purchasing.Vendor v
-ON pv.BusinessEntityID = v.BusinessEntityID
-WHERE ProductSubcategoryID = 15
-ORDER BY v.Name;*/
