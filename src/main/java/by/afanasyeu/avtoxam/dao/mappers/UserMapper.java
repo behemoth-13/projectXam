@@ -24,21 +24,21 @@ public interface UserMapper {
         @Update("UPDATE user SET login = #{newLogin} WHERE login = #{oldLogin}")
         void updateLogin(@Param("oldLogin") String oldLogin, @Param("newLogin") String newLogin);
 
-        @Update("UPDATE user SET region = #{region} WHERE login = #{login}")
-        void updateRegion(@Param("login") String login, @Param("region") Integer region);
+        @Update("UPDATE user SET region = #{region} WHERE id = #{id}")
+        void updateRegion(@Param("id") Long id, @Param("region") Integer region);
 
-        @Update("UPDATE user SET password = #{newPassword} WHERE login = #{login}")
-        void updatePassword(@Param("login") String login, @Param("newPassword") String newPassword);
+        @Update("UPDATE user SET password = #{newPassword} WHERE id = #{id}")
+        void updatePassword(@Param("id") Long id, @Param("newPassword") String newPassword);
 
-        @Delete("DELETE FROM user WHERE login = #{login}")
-        void deleteByLogin(String login);
+        @Delete("DELETE FROM user WHERE id = #{id}")
+        void deleteById(Long id);
 
         @Select("SELECT if(COUNT(*)>0,'true','false') FROM user WHERE login = #{login} AND password = #{password}")
-        Boolean isExistUser(@Param("login") String login, @Param("newPassword") String password);
+        Boolean isExistUser(@Param("login") String login, @Param("password") String password);
 
         @Select("SELECT c.country AS country, r.region AS region, login AS login, reg_date AS regDate " +
-                "FROM user AS u JOIN region AS r " +
-                "ON u.region = r.id JOIN country c ON r.country_id = c.id " +
+                "FROM user AS u JOIN region AS r ON u.region = r.id " +
+                "JOIN country c ON r.country_id = c.id " +
                 "WHERE login = #{login}")
         UserDTO getUserDTO(String login);
 }

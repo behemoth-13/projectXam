@@ -86,4 +86,18 @@ public class MessageDTO {
     public void setStatus(Character status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "MessageDTO{" +
+                "id=" + id +
+                ", dateMessage=" + dateMessage +
+                ", message='" + message + '\'' +
+                ", userLogin='" + userLogin + '\'' +
+                ", countLike=" + countLike +
+                ", countDisLike=" + countDisLike +
+                ", countComment=" + countComment +
+                ", status=" + status +
+                '}';
+    }
 }

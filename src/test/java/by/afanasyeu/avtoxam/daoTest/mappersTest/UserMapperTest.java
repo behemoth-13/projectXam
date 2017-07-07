@@ -4,7 +4,6 @@ import by.afanasyeu.avtoxam.dao.entities.DTO.UserDTO;
 import by.afanasyeu.avtoxam.dao.entities.User;
 import by.afanasyeu.avtoxam.dao.mappers.UserMapper;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
@@ -29,7 +27,7 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring-test-config.xml" })
 @Sql(
-        scripts = "classpath:sqlScripts/deleteData-InsertData-testUserMapper.sql",
+        scripts = "classpath:sqlScripts/deleteData-InsertData-test.sql",
         config = @SqlConfig(transactionMode = ISOLATED),
         executionPhase = BEFORE_TEST_METHOD
 )
@@ -46,24 +44,58 @@ public class UserMapperTest {
         u.setLogin("testLogin");
         u.setRegDate(new Date());
         u.setPassword("testPassword");
-        u.setRegion(4);
+        u.setRegion(1);
+        int before = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM user", null, Integer.class);
         userMapper.insertUser(u);
-        System.out.println((Integer) jdbcTemplate.queryForObject("SELECT COUNT(id) FROM user", null, Integer.class));
+        int after = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM user", null, Integer.class);
+        assertTrue((after - before) == 1);
     }
 
     @Test
     public void isExistLoginTest() {
-        assertTrue(userMapper.isExistLogin("testLogin"));
+        assertTrue(userMapper.isExistLogin("Логин1"));
     }
 
     @Test
     public void updateLoginTest() {
-        userMapper.updateLogin("testLogin", "newLogin");
+        userMapper.updateLogin("Логин1", "newLogin");
+        Boolean isUpdate = jdbcTemplate.queryForObject("SELECT IF(COUNT(*) > 0,'true','false') FROM user WHERE login = 'newLogin'", null, Boolean.class);
+        assertTrue(isUpdate);
+    }
+
+    @Test
+    public void updateRegionTest() {
+        userMapper.updateRegion(1L, 9);
+        Boolean isUpdate = jdbcTemplate.queryForObject("SELECT IF(COUNT(*) > 0,'true','false') FROM user WHERE region = 9", null, Boolean.class);
+        assertTrue(isUpdate);
+    }
+
+    @Test
+    public void updatePasswordTest() {
+        userMapper.updatePassword(1L, "newPassword");
+        Boolean isUpdate = jdbcTemplate.queryForObject("SELECT IF(COUNT(*) > 0,'true','false') FROM user WHERE password = 'newPassword'", null, Boolean.class);
+        assertTrue(isUpdate);
+    }
+
+    @Test
+    public void deleteByLoginTest() {
+        int before = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM user", null, Integer.class);
+        userMapper.deleteById(1L);
+        int after = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM user", null, Integer.class);
+        assertTrue((before - after) == 1);
+    }
+
+    @Test
+    public void isExistUserTest() {
+        assertTrue(userMapper.isExistUser("Логин1", "пароль1"));
     }
 
     @Test
     public void getUserDTOTest() {
-        UserDTO userDTO = userMapper.getUserDTO("testLogin");
-        System.out.println(userDTO);
+        UserDTO userDTO = userMapper.getUserDTO("Логин1");
+        assertTrue(userDTO.getCountry().equals("Беларусь"));
+        assertTrue(userDTO.getRegion().equals("Минск"));
+        assertTrue(userDTO.getLogin().equals("Логин1"));
+        assertTrue(userDTO.getRegDate().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));
     }
 }
