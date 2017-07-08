@@ -20,47 +20,147 @@ public interface MessageMapper {
             keyColumn="id")
     void insertMessage(Message message);
 
-    @Select("SELECT m.id AS id, m.date_message AS dateMessage, m.message AS message, u.login AS userLogin, " +
+    //обратный порядок
+    @Select(
+            "SELECT m.id AS id, m.date_message AS dateMessage, m.message AS message, u.login AS userLogin, " +
             "COUNT(DISTINCT l.id) AS countLike, COUNT(DISTINCT d.id) AS countDisLike, COUNT(DISTINCT c.id) AS countComment, " +
-            "CASE " +
-            " WHEN SUM(IF(l.user_id = #{userId}, 1, 0))<4 AND SUM(IF(d.user_id = #{userId}, 1, 0))<3 THEN 'a' " +
-            " END AS status " +
-            "FROM message AS m JOIN user AS u ON m.user_id = u.id " +
-            "left JOIN `like` AS l ON m.id = l.message_id " +
-            "left JOIN dis_like AS d ON m.id = d.message_id " +
-            "left JOIN comment AS c ON m.id = c.message_id GROUP BY m.id " +
+            "CASE" +
+            "    WHEN SUM(IF(l.user_id = #{userId}, 1, 0))<1 AND SUM(IF(d.user_id = #{userId}, 1, 0))<1 " +
+            "        AND SUM(IF(f.user_id = #{userId}, 1, 0))>0 THEN 'a'" +
+            "    WHEN SUM(IF(l.user_id = #{userId}, 1, 0))<1 AND SUM(IF(d.user_id = #{userId}, 1, 0))>0 " +
+            "        AND SUM(IF(f.user_id = #{userId}, 1, 0))<1 THEN 'b'" +
+            "    WHEN SUM(IF(l.user_id = #{userId}, 1, 0))<1 AND SUM(IF(d.user_id = #{userId}, 1, 0))>0 " +
+            "        AND SUM(IF(f.user_id = #{userId}, 1, 0))>0 THEN 'c'" +
+            "    WHEN SUM(IF(l.user_id = #{userId}, 1, 0))>0 AND SUM(IF(d.user_id = #{userId}, 1, 0))<1 " +
+            "        AND SUM(IF(f.user_id = #{userId}, 1, 0))<1 THEN 'd'" +
+            "    WHEN SUM(IF(l.user_id = #{userId}, 1, 0))>0 AND SUM(IF(d.user_id = #{userId}, 1, 0))<1 " +
+            "        AND SUM(IF(f.user_id = #{userId}, 1, 0))>0 THEN 'e'" +
+            "END AS status  " +
+            "FROM message AS m " +
+            "JOIN user AS u ON m.user_id = u.id " +
+            "LEFT JOIN `like` AS l ON m.id = l.message_id " +
+            "LEFT JOIN dis_like AS d ON m.id = d.message_id " +
+            "LEFT JOIN comment AS c ON m.id = c.message_id " +
+            "LEFT JOIN favorite as f ON m.id = f.message_id GROUP BY m.id " +
             "ORDER BY m.id DESC LIMIT #{countLast}"
     )
-    /*SELECT ccc_news . * ,
-SUM(if(ccc_news_comments.id = 'approved', 1, 0)) AS comments
-FROM ccc_news
-LEFT JOIN ccc_news_comments ON ccc_news_comments.news_id = ccc_news.news_id
-WHERE `ccc_news`.`category` = 'news_layer2'
-AND `ccc_news`.`status` = 'Active'
-GROUP BY ccc_news.news_id
-ORDER BY ccc_news.set_order ASC
-LIMIT 20 */
-    @Results(value={
-            //@Result(property="dateMessage", column ="date_message" )
-    })
+    @Results()
     List<MessageDTO> getLasts (@Param("countLast") Integer countLast, @Param("userId") Long userId);
 
-    void deleteByUserId (Long userId);
-    List<Message> getFromInterval(@Param("first") Long first, @Param("last") Long last);
-    Integer getcountSinceById (Long messageIdSince);
-}
-/*select distributor_id,
-    count(*) total,
-    sum(case when level = 'exec' then 1 else 0 end) ExecCount,
-    sum(case when level = 'personal' then 1 else 0 end) PersonalCount
-from yourtable
-group by distributor_id
+    //удаляет сообщения и комментарии к нему
+    @Delete("DELETE FROM message WHERE id = #{messageId} AND user_id = #{userId}")
+    void deleteByMessageIdUserId (@Param("messageId") Long messageId, @Param("userId") Long userId);
 
-SELECT d.*,
-COUNT(distinct d2.id) AS department_count,
-COUNT(distinct e.id) AS employee_count
-FROM department AS d
-LEFT JOIN department AS d2 ON (d.id = d2.parent_id)
-LEFT JOIN employees AS e ON (e.department_id = d.id)
-GROUP BY d.id
-ORDER BY d.id*/
+    //прямой порядок. Начинается с first и на количество count
+    @Select(
+            "SELECT m.id AS id, m.date_message AS dateMessage, m.message AS message, u.login AS userLogin, " +
+                    "COUNT(DISTINCT l.id) AS countLike, COUNT(DISTINCT d.id) AS countDisLike, COUNT(DISTINCT c.id) AS countComment, " +
+                    "CASE" +
+                    "    WHEN SUM(IF(l.user_id = #{userId}, 1, 0))<1 AND SUM(IF(d.user_id = #{userId}, 1, 0))<1 " +
+                    "        AND SUM(IF(f.user_id = #{userId}, 1, 0))>0 THEN 'a'" +
+                    "    WHEN SUM(IF(l.user_id = #{userId}, 1, 0))<1 AND SUM(IF(d.user_id = #{userId}, 1, 0))>0 " +
+                    "        AND SUM(IF(f.user_id = #{userId}, 1, 0))<1 THEN 'b'" +
+                    "    WHEN SUM(IF(l.user_id = #{userId}, 1, 0))<1 AND SUM(IF(d.user_id = #{userId}, 1, 0))>0 " +
+                    "        AND SUM(IF(f.user_id = #{userId}, 1, 0))>0 THEN 'c'" +
+                    "    WHEN SUM(IF(l.user_id = #{userId}, 1, 0))>0 AND SUM(IF(d.user_id = #{userId}, 1, 0))<1 " +
+                    "        AND SUM(IF(f.user_id = #{userId}, 1, 0))<1 THEN 'd'" +
+                    "    WHEN SUM(IF(l.user_id = #{userId}, 1, 0))>0 AND SUM(IF(d.user_id = #{userId}, 1, 0))<1 " +
+                    "        AND SUM(IF(f.user_id = #{userId}, 1, 0))>0 THEN 'e'" +
+                    "END AS status  " +
+                    "FROM message AS m " +
+                    "JOIN user AS u ON m.user_id = u.id " +
+                    "LEFT JOIN `like` AS l ON m.id = l.message_id " +
+                    "LEFT JOIN dis_like AS d ON m.id = d.message_id " +
+                    "LEFT JOIN comment AS c ON m.id = c.message_id " +
+                    "LEFT JOIN favorite as f ON m.id = f.message_id GROUP BY m.id " +
+                    "ORDER BY m.id LIMIT #{first}, #{count}"
+    )
+    @Results()
+    List<MessageDTO> getFromInterval(@Param("first") Long first, @Param("count") Long count, @Param("userId") Long userId);
+
+    @Select("SELECT COUNT(id) from message WHERE id > #{messageIdSince}")
+    Integer getCountSinceById (Long messageIdSince);
+
+    //обратный порядок
+    @Select(
+            "SELECT m.id AS id, m.date_message AS dateMessage, m.message AS message, u.login AS userLogin, " +
+                    "COUNT(DISTINCT l.id) AS countLike, COUNT(DISTINCT d.id) AS countDisLike, COUNT(DISTINCT c.id) AS countComment, " +
+                    "CASE" +
+                    "    WHEN SUM(IF(f.user_id = #{userId}, 1, 0))<1 THEN 'd'" +
+                    "    WHEN SUM(IF(f.user_id = #{userId}, 1, 0))>0 THEN 'e'" +
+                    "END AS status " +
+                    "FROM message AS m " +
+                    "JOIN user AS u ON m.user_id = u.id " +
+                    "LEFT JOIN `like` AS l ON m.id = l.message_id " +
+                    "LEFT JOIN dis_like AS d ON m.id = d.message_id " +
+                    "LEFT JOIN comment AS c ON m.id = c.message_id " +
+                    "LEFT JOIN favorite as f ON m.id = f.message_id " +
+                    "WHERE l.user_id = #{userId} " +
+                    "GROUP BY m.id " +
+                    "ORDER BY m.id DESC LIMIT #{countLast}"
+    )
+    List<MessageDTO> getLastLikedMessage(@Param("countLast") Integer countLast, @Param("userId") Long userId);
+
+    //прямой порядок. Начинается с first и на количество count
+    @Select(
+            "SELECT m.id AS id, m.date_message AS dateMessage, m.message AS message, u.login AS userLogin, " +
+                    "COUNT(DISTINCT l.id) AS countLike, COUNT(DISTINCT d.id) AS countDisLike, COUNT(DISTINCT c.id) AS countComment, " +
+                    "CASE" +
+                    "    WHEN SUM(IF(f.user_id = #{userId}, 1, 0))<1 THEN 'd'" +
+                    "    WHEN SUM(IF(f.user_id = #{userId}, 1, 0))>0 THEN 'e'" +
+                    "END AS status  " +
+                    "FROM message AS m " +
+                    "JOIN user AS u ON m.user_id = u.id " +
+                    "LEFT JOIN `like` AS l ON m.id = l.message_id " +
+                    "LEFT JOIN dis_like AS d ON m.id = d.message_id " +
+                    "LEFT JOIN comment AS c ON m.id = c.message_id " +
+                    "LEFT JOIN favorite as f ON m.id = f.message_id " +
+                    "WHERE l.user_id = #{userId} " +
+                    "GROUP BY m.id " +
+                    "ORDER BY m.id LIMIT #{first}, #{count}"
+    )
+    @Results()
+    List<MessageDTO> getLikedMessageFromInterval(@Param("first") Long first, @Param("count") Long count, @Param("userId") Long userId);
+
+    //обратный порядок
+    @Select(
+            "SELECT m.id AS id, m.date_message AS dateMessage, m.message AS message, u.login AS userLogin, " +
+                    "COUNT(DISTINCT l.id) AS countLike, COUNT(DISTINCT d.id) AS countDisLike, COUNT(DISTINCT c.id) AS countComment, " +
+                    "CASE" +
+                    "    WHEN SUM(IF(l.user_id = #{userId}, 1, 0))<1 AND SUM(IF(d.user_id = #{userId}, 1, 0))<1 THEN 'a'" +
+                    "    WHEN SUM(IF(l.user_id = #{userId}, 1, 0))<1 AND SUM(IF(d.user_id = #{userId}, 1, 0))>0 THEN 'c'" +
+                    "    WHEN SUM(IF(l.user_id = #{userId}, 1, 0))>0 AND SUM(IF(d.user_id = #{userId}, 1, 0))<1 THEN 'e'" +
+                    "END AS status " +
+                    "FROM message AS m " +
+                    "JOIN user AS u ON m.user_id = u.id " +
+                    "LEFT JOIN `like` AS l ON m.id = l.message_id " +
+                    "LEFT JOIN dis_like AS d ON m.id = d.message_id " +
+                    "LEFT JOIN comment AS c ON m.id = c.message_id " +
+                    "LEFT JOIN favorite as f ON m.id = f.message_id " +
+                    "WHERE f.user_id = #{userId} " +
+                    "GROUP BY m.id " +
+                    "ORDER BY m.id DESC LIMIT #{countLast}"
+    )
+    List<MessageDTO> getLastFavotiteMessage(@Param("countLast") Integer countLast, @Param("userId") Long userId);
+
+    //прямой порядок. Начинается с first и на количество count
+    @Select(
+            "SELECT m.id AS id, m.date_message AS dateMessage, m.message AS message, u.login AS userLogin, " +
+                    "COUNT(DISTINCT l.id) AS countLike, COUNT(DISTINCT d.id) AS countDisLike, COUNT(DISTINCT c.id) AS countComment, " +
+                    "CASE" +
+                    "    WHEN SUM(IF(l.user_id = #{userId}, 1, 0))<1 AND SUM(IF(d.user_id = #{userId}, 1, 0))<1 THEN 'a'" +
+                    "    WHEN SUM(IF(l.user_id = #{userId}, 1, 0))<1 AND SUM(IF(d.user_id = #{userId}, 1, 0))>0 THEN 'c'" +
+                    "    WHEN SUM(IF(l.user_id = #{userId}, 1, 0))>0 AND SUM(IF(d.user_id = #{userId}, 1, 0))<1 THEN 'e'" +
+                    "END AS status " +
+                    "FROM message AS m " +
+                    "JOIN user AS u ON m.user_id = u.id " +
+                    "LEFT JOIN `like` AS l ON m.id = l.message_id " +
+                    "LEFT JOIN dis_like AS d ON m.id = d.message_id " +
+                    "LEFT JOIN comment AS c ON m.id = c.message_id " +
+                    "LEFT JOIN favorite as f ON m.id = f.message_id " +
+                    "WHERE f.user_id = #{userId} " +
+                    "GROUP BY m.id " +
+                    "ORDER BY m.id LIMIT  #{first}, #{count}"
+    )
+    List<MessageDTO> getFavotiteMessageFromInterval(@Param("first") Long first, @Param("count") Long count, @Param("userId") Long userId);
+}

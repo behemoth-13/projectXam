@@ -1,4 +1,4 @@
-package by.afanasyeu.avtoxam.daoTest.mappersTest;
+package by.afanasyeu.avtoxam.dao.mappersTest;
 
 import by.afanasyeu.avtoxam.dao.entities.DTO.UserDTO;
 import by.afanasyeu.avtoxam.dao.entities.User;

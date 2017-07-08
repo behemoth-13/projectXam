@@ -88,3 +88,9 @@ VALUES
   (11, 1, NULL, 6),
   (12, 4, NULL, 4),
   (13, 5, NULL, 2);
+INSERT INTO xamTest.favorite (id, user_id, message_id)
+VALUES
+  (1, 1, 1),
+  (2, 1, 3),
+  (3, 1, 7),
+  (4, 1, 5);
