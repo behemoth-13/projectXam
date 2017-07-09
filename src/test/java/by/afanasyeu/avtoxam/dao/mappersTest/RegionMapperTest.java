@@ -40,4 +40,9 @@ public class RegionMapperTest {
         assertTrue(list.contains(new RegionDTO(2, "Минская обл.")));
         assertTrue(list.contains(new RegionDTO(3, "Витебск")));
     }
+
+    @Test
+    public void isExistRegionTest() {
+        assertTrue(regionMapper.isExistRegion(5));
+    }
 }

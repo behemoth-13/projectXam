@@ -18,4 +18,7 @@ public interface RegionMapper {
             @Result(property="countryId", column ="country_id" )
     })
     List<RegionDTO> getRegionsByCountryId(Integer countryId);
+
+    @Select("SELECT IF(COUNT(*) > 0,'true','false') FROM region WHERE id = #{regionId}")
+    Boolean isExistRegion(Integer regionId);
 }

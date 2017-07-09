@@ -41,6 +41,7 @@ public class UserMapperTest {
     @Test
     public void insertUserTest() {
         User u = new User();
+        u.setId(24L);
         u.setLogin("testLogin");
         u.setRegDate(new Date());
         u.setPassword("testPassword");
