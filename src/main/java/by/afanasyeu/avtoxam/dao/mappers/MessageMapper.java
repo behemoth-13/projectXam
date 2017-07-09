@@ -76,8 +76,9 @@ public interface MessageMapper {
                     "ORDER BY m.id LIMIT #{first}, #{count}"
     )
     @Results()
-    List<MessageDTO> getFromInterval(@Param("first") Long first, @Param("count") Long count, @Param("userId") Long userId);
+    List<MessageDTO> getFromInterval(@Param("first") Long first, @Param("count") Integer count, @Param("userId") Long userId);
 
+    //сколько сообщений начиная с указанного id
     @Select("SELECT COUNT(id) from message WHERE id > #{messageIdSince}")
     Integer getCountSinceById (Long messageIdSince);
 
@@ -162,5 +163,5 @@ public interface MessageMapper {
                     "GROUP BY m.id " +
                     "ORDER BY m.id LIMIT  #{first}, #{count}"
     )
-    List<MessageDTO> getFavotiteMessageFromInterval(@Param("first") Long first, @Param("count") Long count, @Param("userId") Long userId);
+    List<MessageDTO> getFavotiteMessageFromInterval(@Param("first") Long first, @Param("count") Integer count, @Param("userId") Long userId);
 }

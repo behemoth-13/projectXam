@@ -7,7 +7,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema xamTest
 -- -----------------------------------------------------
-
+DROP SCHEMA IF EXISTS `xamTest`;
 -- -----------------------------------------------------
 -- Schema xamTest
 -- -----------------------------------------------------
@@ -82,7 +82,7 @@ ENGINE = InnoDB;
 -- Table `xamTest`.`comment`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `xamTest`.`comment` (
-  `id` BIGINT UNSIGNED NOT NULL,
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT UNSIGNED NOT NULL,
   `message_id` BIGINT UNSIGNED NOT NULL,
   `date_comment` TIMESTAMP NOT NULL,

@@ -16,7 +16,7 @@
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/xamTest?autoReconnect=true&amp;createDatabaseIfNotExist=true&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;useSSL=false" />
+        <property name="url" value="jdbc:mysql://localhost:3306/xamTest?autoReconnect=true&amp;characterEncoding=UTF-8&amp;createDatabaseIfNotExist=true&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;useSSL=false" />
         <property name="username" value="root" />
         <property name="password" value="root" />
     </bean>

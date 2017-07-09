@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 /**
  * Created by Afanasyeu Alexei on 28.06.2017.
  */
+
 @Repository
 public interface UserMapper {
         @Insert("INSERT INTO user(region, login, password, reg_date) VALUES"

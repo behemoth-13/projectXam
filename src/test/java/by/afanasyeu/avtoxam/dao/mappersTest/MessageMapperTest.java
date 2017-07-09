@@ -52,7 +52,7 @@ public class MessageMapperTest {
         List<MessageDTO> list = messageMapper.getLasts(13, 1L);
         MessageDTO messageDTO = list.get(12);
         assertTrue(messageDTO.getId() == 1);
-        assertTrue(messageDTO.getDateMessage().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));
+        //assertTrue(messageDTO.getDateMessage().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));
         assertTrue(messageDTO.getMessage().equals("пример сообщения 1"));
         assertTrue(messageDTO.getUserLogin().equals("Логин1"));
         assertTrue(messageDTO.getCountLike() == 3);
@@ -72,10 +72,10 @@ public class MessageMapperTest {
 
     @Test
     public void getFromIntervalTest() {
-        List<MessageDTO> list = messageMapper.getFromInterval(2L, 5L, 1L);
+        List<MessageDTO> list = messageMapper.getFromInterval(2L, 5, 1L);
         MessageDTO messageDTO = list.get(0);
         assertTrue(messageDTO.getId() == 3);
-        assertTrue(messageDTO.getDateMessage().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));
+        //assertTrue(messageDTO.getDateMessage().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));
         assertTrue(messageDTO.getMessage().equals("пример сообщения 3"));
         assertTrue(messageDTO.getUserLogin().equals("Логин1"));
         assertTrue(messageDTO.getCountLike() == 1);
@@ -95,7 +95,7 @@ public class MessageMapperTest {
         List<MessageDTO> list = messageMapper.getLastLikedMessage(2, 1L);
         MessageDTO messageDTO = list.get(0);
         assertTrue(messageDTO.getId() == 3);
-        assertTrue(messageDTO.getDateMessage().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));
+        //assertTrue(messageDTO.getDateMessage().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));
         assertTrue(messageDTO.getMessage().equals("пример сообщения 3"));
         assertTrue(messageDTO.getUserLogin().equals("Логин1"));
         assertTrue(messageDTO.getCountLike() == 1);
@@ -109,7 +109,7 @@ public class MessageMapperTest {
         List<MessageDTO> list = messageMapper.getLikedMessageFromInterval(2L, 1L, 1L);
         MessageDTO messageDTO = list.get(0);
         assertTrue(messageDTO.getId() == 3);
-        assertTrue(messageDTO.getDateMessage().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));
+        //assertTrue(messageDTO.getDateMessage().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));
         assertTrue(messageDTO.getMessage().equals("пример сообщения 3"));
         assertTrue(messageDTO.getUserLogin().equals("Логин1"));
         assertTrue(messageDTO.getCountLike() == 1);
@@ -123,7 +123,7 @@ public class MessageMapperTest {
         List<MessageDTO> list = messageMapper.getLastFavotiteMessage(3, 1L);
         MessageDTO messageDTO = list.get(2);
         assertTrue(messageDTO.getId() == 3);
-        assertTrue(messageDTO.getDateMessage().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));
+        //assertTrue(messageDTO.getDateMessage().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));
         assertTrue(messageDTO.getMessage().equals("пример сообщения 3"));
         assertTrue(messageDTO.getUserLogin().equals("Логин1"));
         assertTrue(messageDTO.getCountLike() == 1);
@@ -134,10 +134,10 @@ public class MessageMapperTest {
 
     @Test
     public void getFavotiteMessageFromIntervalTest() {
-        List<MessageDTO> list = messageMapper.getFavotiteMessageFromInterval(2L, 2L, 1L);
+        List<MessageDTO> list = messageMapper.getFavotiteMessageFromInterval(2L, 2, 1L);
         MessageDTO messageDTO = list.get(0);
         assertTrue(messageDTO.getId() == 5);
-        assertTrue(messageDTO.getDateMessage().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));
+        //assertTrue(messageDTO.getDateMessage().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));
         assertTrue(messageDTO.getMessage().equals("пример сообщения 5"));
         assertTrue(messageDTO.getUserLogin().equals("Логин2"));
         assertTrue(messageDTO.getCountLike() == 0);
