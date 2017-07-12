@@ -22,8 +22,8 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private RegionMapper regionMapper;
 
-    @Override
     @Transactional
+    @Override
     public void insertUser(User user) {
         userMapper.insertUser(user);
     }
@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService{
         return userMapper.isExistLogin(login);
     }
 
-    @Override
     @Transactional
+    @Override
     public void updateLogin(String oldLogin, String newLogin) throws ServiceException {
         newLogin = newLogin.trim();
         if (newLogin.length() >= 2 && newLogin.length() <= 15) {
@@ -45,8 +45,8 @@ public class UserServiceImpl implements UserService{
         }
     }
 
-    @Override
     @Transactional
+    @Override
     public void updateRegion(Long id, Integer region) throws ServiceException {
         if (regionMapper.isExistRegion(region)) {
             userMapper.updateRegion(id, region);
@@ -55,8 +55,8 @@ public class UserServiceImpl implements UserService{
         }
     }
 
-    @Override
     @Transactional
+    @Override
     public void updatePassword(Long id, String newPassword) throws ServiceException {
         if (newPassword.length() == 64) {
             userMapper.updatePassword(id, newPassword);
@@ -66,8 +66,8 @@ public class UserServiceImpl implements UserService{
         }
     }
 
-    @Override
     @Transactional
+    @Override
     public void deleteById(Long id) {
         userMapper.deleteById(id);
     }

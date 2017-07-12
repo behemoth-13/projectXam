@@ -120,7 +120,7 @@ public class MessageMapperTest {
 
     @Test
     public void getLastFavotiteMessageTest() {
-        List<MessageDTO> list = messageMapper.getLastFavotiteMessage(3, 1L);
+        List<MessageDTO> list = messageMapper.getLastFavoriteMessage(3, 1L);
         MessageDTO messageDTO = list.get(2);
         assertTrue(messageDTO.getId() == 3);
         //assertTrue(messageDTO.getDateMessage().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));
@@ -134,7 +134,7 @@ public class MessageMapperTest {
 
     @Test
     public void getFavotiteMessageFromIntervalTest() {
-        List<MessageDTO> list = messageMapper.getFavotiteMessageFromInterval(2L, 2, 1L);
+        List<MessageDTO> list = messageMapper.getFavoriteMessageFromInterval(2L, 2, 1L);
         MessageDTO messageDTO = list.get(0);
         assertTrue(messageDTO.getId() == 5);
         //assertTrue(messageDTO.getDateMessage().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));

@@ -5,12 +5,15 @@ import by.afanasyeu.avtoxam.dao.mappers.RegionMapper;
 import by.afanasyeu.avtoxam.service.RegionService;
 import by.afanasyeu.avtoxam.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by Afanasyeu Alexei on 10.07.2017.
  */
+
+@Service
 public class RegionServiceImpl implements RegionService {
 
     @Autowired
