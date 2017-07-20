@@ -7,6 +7,4 @@ import by.afanasyeu.avtoxam.dao.entities.Like;
  */
 public interface LikeService {
     void insertLike(Like like);
-    void deleteFromMessage(Like like);
-    void deleteFromComment(Like like);
 }

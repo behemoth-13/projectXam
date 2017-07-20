@@ -1,9 +1,7 @@
 package by.afanasyeu.avtoxam.dao.mappers;
 
 import by.afanasyeu.avtoxam.dao.entities.Like;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -24,4 +22,10 @@ public interface LikeMapper {
 
     @Delete("DELETE FROM `like` WHERE user_id = #{userId} AND comment_id = #{commentId}")
     void deleteFromComment(Like like);
+
+    @Select("SELECT if(COUNT(*)>0,'true','false') FROM `like` WHERE user_id = #{userId} AND message_id = #{messageId}")
+    Boolean isExistFromMessage(Like like);
+
+    @Select("SELECT if(COUNT(*)>0,'true','false') FROM `like` WHERE user_id = #{userId} AND comment_id = #{commentId}")
+    Boolean isExistFromComment(Like like);
 }

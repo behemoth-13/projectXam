@@ -1,6 +1,6 @@
 package by.afanasyeu.avtoxam.dao.mappersTest;
 
-import by.afanasyeu.avtoxam.dao.entities.DisLike;
+import by.afanasyeu.avtoxam.dao.entities.Like;
 import by.afanasyeu.avtoxam.dao.mappers.DisLikeMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,10 +34,10 @@ public class DisLikeMapperTest {
 
     @Test
     public void insertDisLikeTest() {
-        DisLike d1 = new DisLike();
+        Like d1 = new Like();
         d1.setUserId(6L);
         d1.setMessageId(6L);
-        DisLike d2 = new DisLike();
+        Like d2 = new Like();
         d2.setUserId(6L);
         d2.setCommentId(6L);
         int before = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM `dis_like`", null, Integer.class);
@@ -49,7 +49,7 @@ public class DisLikeMapperTest {
 
     @Test
     public void deleteFromMessageTest() {
-        DisLike d1 = new DisLike();
+        Like d1 = new Like();
         d1.setUserId(3L);
         d1.setMessageId(2L);
         int before = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM `dis_like`", null, Integer.class);
@@ -60,7 +60,7 @@ public class DisLikeMapperTest {
 
     @Test
     public void deleteFromMCommentTest() {
-        DisLike d1 = new DisLike();
+        Like d1 = new Like();
         d1.setUserId(1L);
         d1.setCommentId(4L);
         int before = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM `dis_like`", null, Integer.class);

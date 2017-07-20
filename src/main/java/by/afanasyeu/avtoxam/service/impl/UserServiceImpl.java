@@ -8,6 +8,7 @@ import by.afanasyeu.avtoxam.service.UserService;
 import by.afanasyeu.avtoxam.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -22,18 +23,19 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private RegionMapper regionMapper;
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public void insertUser(User user) {
         userMapper.insertUser(user);
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public Boolean isExistLogin(String login) {
         return userMapper.isExistLogin(login);
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public void updateLogin(String oldLogin, String newLogin) throws ServiceException {
         newLogin = newLogin.trim();
@@ -45,7 +47,7 @@ public class UserServiceImpl implements UserService{
         }
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public void updateRegion(Long id, Integer region) throws ServiceException {
         if (regionMapper.isExistRegion(region)) {
@@ -55,7 +57,7 @@ public class UserServiceImpl implements UserService{
         }
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public void updatePassword(Long id, String newPassword) throws ServiceException {
         if (newPassword.length() == 64) {
@@ -66,17 +68,19 @@ public class UserServiceImpl implements UserService{
         }
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public void deleteById(Long id) {
         userMapper.deleteById(id);
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     @Override
     public Boolean isExistUser(String login, String password) {
         return userMapper.isExistUser(login, password);
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     @Override
     public UserDTO getUserDTO(String login) throws ServiceException {
         UserDTO user = userMapper.getUserDTO(login);
