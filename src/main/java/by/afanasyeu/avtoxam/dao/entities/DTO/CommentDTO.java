@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class CommentDTO {
     private Long id;
-    private Date dateComment;
+    private String dateComment;
     private String comment;
     private String userLogin;
     private Integer countLike;
@@ -28,10 +28,10 @@ public class CommentDTO {
     public void setId(Long id) {
         this.id = id;
     }
-    public Date getDateComment() {
+    public String getDateComment() {
         return dateComment;
     }
-    public void setDateComment(Date dateComment) {
+    public void setDateComment(String dateComment) {
         this.dateComment = dateComment;
     }
     public String getComment() {

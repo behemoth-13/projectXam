@@ -9,7 +9,7 @@ public class UserDTO {
     private String country;
     private String region;
     private String login;       //от 2 до 15 символов
-    private Date regDate;
+    private String regDate;
 
     public UserDTO() {
     }
@@ -38,11 +38,11 @@ public class UserDTO {
         this.login = login;
     }
 
-    public Date getRegDate() {
+    public String getRegDate() {
         return regDate;
     }
 
-    public void setRegDate(Date regDate) {
+    public void setRegDate(String regDate) {
         this.regDate = regDate;
     }
 

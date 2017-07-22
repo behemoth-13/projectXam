@@ -1,13 +1,11 @@
 package by.afanasyeu.avtoxam.dao.entities.DTO;
 
-import java.util.Date;
-
 /**
  * Created by Afanasyeu Alexei on 04.07.2017.
  */
 public class MessageDTO {
     private Long id;
-    private Date dateMessage;
+    private String dateMessage;
     private String message;         //от 1 до 2048 символов
     private String userLogin;       //нет в бд
     private Integer countLike;      //нет в бд
@@ -31,11 +29,11 @@ public class MessageDTO {
         this.id = id;
     }
 
-    public Date getDateMessage() {
+    public String getDateMessage() {
         return dateMessage;
     }
 
-    public void setDateMessage(Date dateMessage) {
+    public void setDateMessage(String dateMessage) {
         this.dateMessage = dateMessage;
     }
 

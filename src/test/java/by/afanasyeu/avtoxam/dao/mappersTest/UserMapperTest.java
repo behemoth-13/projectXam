@@ -47,7 +47,6 @@ public class UserMapperTest {
         u.setPassword("testPassword");
         u.setRegion(1);
         int before = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM user", null, Integer.class);
-        userMapper.insertUser(u);
         int after = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM user", null, Integer.class);
         assertTrue((after - before) == 1);
     }
