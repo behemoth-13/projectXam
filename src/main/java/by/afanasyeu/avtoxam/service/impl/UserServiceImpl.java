@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService{
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public void insertUser(User user) {
+        System.out.println(user);
         userMapper.insertUser(user);
     }
 

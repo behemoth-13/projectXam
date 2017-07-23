@@ -98,4 +98,10 @@ public class UserMapperTest {
         assertTrue(userDTO.getLogin().equals("Логин1"));
         assertTrue(userDTO.getRegDate().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));
     }
+
+    @Test
+    public void getByLoginTest() {
+        User user = userMapper.getByLogin("Логин3242");
+        System.out.println(user==null);
+    }
 }

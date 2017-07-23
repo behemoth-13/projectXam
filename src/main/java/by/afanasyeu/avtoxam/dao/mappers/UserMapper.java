@@ -42,4 +42,8 @@ public interface UserMapper {
                 "JOIN country c ON r.country_id = c.id " +
                 "WHERE login = #{login}")
         UserDTO getUserDTO(String login);
+
+        @Select("SELECT id AS id, region AS region, login AS login, password AS password, reg_date AS regDate " +
+                "FROM user WHERE login = #{login}")
+        User getByLogin(String login);
 }
