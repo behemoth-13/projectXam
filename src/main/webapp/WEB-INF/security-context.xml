@@ -5,21 +5,17 @@
              xmlns:sec="http://www.springframework.org/schema/security"
              xsi:schemaLocation="
       http://www.springframework.org/schema/security
-      http://www.springframework.org/schema/security/spring-security-4.2.xsd
+      http://www.springframework.org/schema/security/spring-security-3.2.xsd
       http://www.springframework.org/schema/beans
       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <!-- Rest authentication entry point configuration -->
+    <!-- Rest authentication entry point configuration --><!--create-session="stateless"-->
     <http use-expressions="true" create-session="stateless"
           entry-point-ref="restServicesEntryPoint" authentication-manager-ref="authenticationManagerForRest">
         <intercept-url pattern="/rest/**" />
-        <intercept-url pattern="/rest/user/*" access="permitAll"/>
-        <intercept-url pattern="/rest/login*" access="permitAll" />
+        <!--<intercept-url pattern="/rest/user/" access="ROLE_ANONYMOUS"/>-->
         <!--<intercept-url pattern="/rest/user/*" access="hasRole('ROLE_USER')"/>-->
-        <form-login login-processing-url="/rest/login*"
-                             password-parameter="password"
-                             username-parameter="username"
-        />
+        <form-login/>
         <sec:form-login authentication-success-handler-ref="mySuccessHandler" />
         <sec:access-denied-handler ref="myAuthenticationAccessDeniedHandler" />
         <http-basic />

@@ -17,8 +17,16 @@ import javax.validation.Valid;
  * Created by Afanasyeu Alexei on 20.07.2017.
  */
 
-//curl -H "Content-Type: application/json" -X POST -d '{"id":null,"region":1,"login":"через debug","password":"passDebug","regDate":null}' http://localhost:8080/rest/user
-//curl -H "Content-Type: application/json" -X POST -d '{"username":"dfgfccc","password":"passDebug"}' http://localhost:8080/login/
+//curl -H "Content-Type:application/json" -X POST -d '{"id":null,"region":1,"login":"через debug","password":"passDebug","regDate":null}' http://localhost:8080/rest/user
+//curl -H "Content-Type:application/json" -X POST -d '{"j_username":"testLogin","j_password":"testPassword"}' http://localhost:8080/j_spring_security_check
+    //curl -H "Content-Type: application/json" -X GET http://localhost:8080/rest/
+
+// curl -i -X POST -d j_username=temporary -d j_password=temporary -c e:/cookies.txt http://localhost:8080/api/j_spring_security_check
+// curl -i -X POST -d username=temporary -d password=temporary -c e:/cookies.txt http://localhost:8080/login
+// curl -i -X POST -d j_username=user -d j_password=userPass -c e:/cookies.txt http://localhost:8080/api/j_spring_security_check
+
+// curl -i -H "Content-Type: application/json" -X GET -b e:/cookies.txt http://localhost:8080/api/customer
+// curl -i -H "Content-Type: application/json" -X GET -b e:/cookies.txt http://localhost:8080/api/customer/2
 
 
 @RestController
@@ -28,6 +36,7 @@ public class UserRestController {
     @Autowired
     private UserService userService;
 
+    @PreAuthorize("permitAll")
     @PostMapping(value = "")
     public ResponseEntity<User> create(@RequestBody User user) {
         try {
@@ -38,7 +47,8 @@ public class UserRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('ROLE_USER')") //блокирует
+    @Secured("ROLE_USER")
+    //@Secured({"ROLE_OPERATOR", "ROLE_USER"})
     @GetMapping(value = "/{login}")
     public ResponseEntity<UserDTO> getByLogin(@PathVariable String login) {
         UserDTO userDTO;
