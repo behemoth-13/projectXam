@@ -38,6 +38,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user.getLogin().equals("Admin")) {
             grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_ADMIN));
         }
-        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), grantedAuthorities);
+        return new UserDetailsImpl(user.getLogin(), user.getPassword(), grantedAuthorities, user.getId());
     }
 }

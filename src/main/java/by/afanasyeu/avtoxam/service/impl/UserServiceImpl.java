@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+
 /**
  * Created by Afanasyeu Alexei on 09.07.2017.
  */
@@ -27,6 +29,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public void insertUser(User user) {
         System.out.println(user);
+        user.setRegDate(new Date());
         userMapper.insertUser(user);
     }
 

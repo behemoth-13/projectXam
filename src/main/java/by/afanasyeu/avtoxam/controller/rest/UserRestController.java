@@ -2,6 +2,7 @@ package by.afanasyeu.avtoxam.controller.rest;
 
 import by.afanasyeu.avtoxam.dao.entities.DTO.UserDTO;
 import by.afanasyeu.avtoxam.dao.entities.User;
+import by.afanasyeu.avtoxam.security.SecurityService;
 import by.afanasyeu.avtoxam.service.UserService;
 import by.afanasyeu.avtoxam.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class UserRestController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SecurityService securityService;
+
     @PreAuthorize("permitAll")
     @PostMapping(value = "")
     public ResponseEntity<User> create(@RequestBody User user) {
@@ -49,6 +53,9 @@ public class UserRestController {
     //@Secured({"ROLE_OPERATOR", "ROLE_USER"})
     @GetMapping(value = "/{login}")
     public ResponseEntity<UserDTO> getByLogin(@PathVariable String login) {
+
+        System.out.println("id is " + securityService.getLoggedInUserId() + ", username is " + securityService.getLoggedInUsername());
+
         UserDTO userDTO;
         try {
             userDTO = userService.getUserDTO(login);
