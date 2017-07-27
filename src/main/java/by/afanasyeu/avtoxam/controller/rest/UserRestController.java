@@ -11,8 +11,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 /**
  * Created by Afanasyeu Alexei on 20.07.2017.
  */
@@ -59,7 +57,4 @@ public class UserRestController {
         }
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
-
-//    @PostMapping(value = "/singup")
-//    public ResponseEntit
 }

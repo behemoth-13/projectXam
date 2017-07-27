@@ -29,7 +29,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        System.out.println("in userDetailServiceImpl " + login);
         User user = userMapper.getByLogin(login);
         if (user == null) {
             throw new UsernameNotFoundException("User with login " + login + " not found.");

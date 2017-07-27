@@ -1,9 +1,6 @@
 package by.afanasyeu.avtoxam.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 import javax.servlet.ServletException;
@@ -19,9 +16,6 @@ public class RestAuthenticationAccessDeniedHandler implements AccessDeniedHandle
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response,
                        AccessDeniedException arg2) throws IOException, ServletException {
-        System.out.println("denied ");
-        int i =1;
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-
     }
 }
