@@ -122,7 +122,7 @@ public interface MessageMapper {
                     "ORDER BY m.id LIMIT #{first}, #{count}"
     )
     @Results()
-    List<MessageDTO> getLikedMessageFromInterval(@Param("first") Long first, @Param("count") Long count,
+    List<MessageDTO> getLikedMessageFromInterval(@Param("first") Long first, @Param("count") Integer count,
                                                  @Param("userId") Long userId);
 
     //обратный порядок

@@ -2,7 +2,7 @@ package by.afanasyeu.avtoxam.service;
 
 import by.afanasyeu.avtoxam.dao.entities.DTO.MessageDTO;
 import by.afanasyeu.avtoxam.dao.entities.Message;
-import org.apache.ibatis.annotations.Param;
+import by.afanasyeu.avtoxam.service.exception.ServiceException;
 
 import java.util.List;
 
@@ -11,12 +11,12 @@ import java.util.List;
  */
 public interface MessageService {
     void insertMessage(Message message);
-    List<MessageDTO> getLasts (@Param("countLast") Integer countLast, @Param("userId") Long userId);
-    void deleteByMessageIdUserId (@Param("messageId") Long messageId, @Param("userId") Long userId);
-    List<MessageDTO> getFromInterval(@Param("first") Long first, @Param("count") Integer count, @Param("userId") Long userId);
+    List<MessageDTO> getLasts (Integer countLast, Long userId) throws ServiceException;
+    void deleteByMessageIdUserId (Long messageId, Long userId);
+    List<MessageDTO> getFromInterval(Long first, Integer count, Long userId) throws ServiceException;
     Integer getCountSinceById (Long messageIdSince);
-    List<MessageDTO> getLastLikedMessage(@Param("countLast") Integer countLast, @Param("userId") Long userId);
-    List<MessageDTO> getLikedMessageFromInterval(@Param("first") Long first, @Param("count") Long count, @Param("userId") Long userId);
-    List<MessageDTO> getLastFavoriteMessage(@Param("countLast") Integer countLast, @Param("userId") Long userId);
-    List<MessageDTO> getFavoriteMessageFromInterval(@Param("first") Long first, @Param("count") Integer count, @Param("userId") Long userId);
+    List<MessageDTO> getLastLikedMessage(Integer countLast, Long userId) throws ServiceException;
+    List<MessageDTO> getLikedMessageFromInterval(Long first, Integer count, Long userId) throws ServiceException;
+    List<MessageDTO> getLastFavoriteMessage(Integer countLast, Long userId) throws ServiceException;
+    List<MessageDTO> getFavoriteMessageFromInterval(Long first, Integer count, Long userId) throws ServiceException;
 }

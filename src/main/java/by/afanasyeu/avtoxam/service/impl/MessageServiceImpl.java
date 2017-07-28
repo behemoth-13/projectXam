@@ -4,7 +4,7 @@ import by.afanasyeu.avtoxam.dao.entities.DTO.MessageDTO;
 import by.afanasyeu.avtoxam.dao.entities.Message;
 import by.afanasyeu.avtoxam.dao.mappers.MessageMapper;
 import by.afanasyeu.avtoxam.service.MessageService;
-import org.apache.ibatis.annotations.Param;
+import by.afanasyeu.avtoxam.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,6 +19,8 @@ import java.util.List;
 @Service
 public class MessageServiceImpl implements MessageService{
 
+    private static final Integer COUNT_LIMIT = 100;
+
     @Autowired
     private MessageMapper messageMapper;
 
@@ -30,20 +32,25 @@ public class MessageServiceImpl implements MessageService{
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     @Override
-    public List<MessageDTO> getLasts(Integer countLast, Long userId) {
+    public List<MessageDTO> getLasts(Integer countLast, Long userId) throws ServiceException {
+        if (countLast > COUNT_LIMIT) {
+            throw new ServiceException("CountLast message cannot be greater than " + COUNT_LIMIT + ". CountLast is " + countLast + ".getLasts");
+        }
         return messageMapper.getLasts(countLast, userId);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
-    public void deleteByMessageIdUserId(@Param("messageId") Long messageId, @Param("userId") Long userId) {
+    public void deleteByMessageIdUserId(Long messageId, Long userId) {
         messageMapper.deleteByMessageIdUserId(messageId, userId);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     @Override
-    public List<MessageDTO> getFromInterval(@Param("first") Long first, @Param("count") Integer count,
-                                            @Param("userId") Long userId) {
+    public List<MessageDTO> getFromInterval(Long first, Integer count, Long userId) throws ServiceException {
+        if (count > COUNT_LIMIT) {
+            throw new ServiceException("Count messages cannot be greater than " + COUNT_LIMIT + ". CountLast is " + count + ".getFromInterval");
+        }
         return messageMapper.getFromInterval(first, count, userId);
     }
 
@@ -55,27 +62,37 @@ public class MessageServiceImpl implements MessageService{
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     @Override
-    public List<MessageDTO> getLastLikedMessage(@Param("countLast") Integer countLast, @Param("userId") Long userId) {
+    public List<MessageDTO> getLastLikedMessage(Integer countLast, Long userId) throws ServiceException {
+        if (countLast > COUNT_LIMIT) {
+            throw new ServiceException("CountLast messages cannot be greater than " + COUNT_LIMIT + ". CountLast is " + countLast + ".getLastLikedMessage");
+        }
         return messageMapper.getLastLikedMessage(countLast,userId);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     @Override
-    public List<MessageDTO> getLikedMessageFromInterval(@Param("first") Long first, @Param("count") Long count,
-                                                        @Param("userId") Long userId) {
-        return messageMapper.getLikedMessageFromInterval(first, count,userId);
+    public List<MessageDTO> getLikedMessageFromInterval(Long first, Integer count, Long userId) throws ServiceException {
+        if (count > COUNT_LIMIT) {
+            throw new ServiceException("Count messages cannot be greater than " + COUNT_LIMIT + ". CountLast is " + count + ".getLikedMessageFromInterval");
+        }
+        return messageMapper.getLikedMessageFromInterval(first, count, userId);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     @Override
-    public List<MessageDTO> getLastFavoriteMessage(@Param("countLast") Integer countLast, @Param("userId") Long userId) {
+    public List<MessageDTO> getLastFavoriteMessage(Integer countLast, Long userId) throws ServiceException {
+        if (countLast > COUNT_LIMIT) {
+            throw new ServiceException("CountLast messages cannot be greater than " + COUNT_LIMIT + ". CountLast is " + countLast + ".getLastFavoriteMessage");
+        }
         return messageMapper.getLastFavoriteMessage(countLast,userId);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     @Override
-    public List<MessageDTO> getFavoriteMessageFromInterval(@Param("first") Long first, @Param("count") Integer count,
-                                                           @Param("userId") Long userId) {
+    public List<MessageDTO> getFavoriteMessageFromInterval(Long first, Integer count, Long userId) throws ServiceException {
+        if (count > COUNT_LIMIT) {
+            throw new ServiceException("Count messages cannot be greater than " + COUNT_LIMIT + ". CountLast is " + count + ".getFavoriteMessageFromInterval");
+        }
         return messageMapper.getFavoriteMessageFromInterval(first, count, userId);
     }
 }

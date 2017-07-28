@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 // curl -i -H "Content-Type: application/json" -X GET -b e:/cookies.txt http://localhost:8080/api/customer
 // curl -i -H "Content-Type: application/json" -X GET -b e:/cookies.txt http://localhost:8080/api/customer/2
 
-
 @RestController
 @RequestMapping("/rest/user")
 public class UserRestController {
@@ -40,7 +39,7 @@ public class UserRestController {
 
     @PreAuthorize("permitAll")
     @PostMapping(value = "")
-    public ResponseEntity<User> create(@RequestBody User user) {
+    public ResponseEntity create(@RequestBody User user) {
         try {
             userService.insertUser(user);
         } catch (Exception e) {
@@ -50,12 +49,8 @@ public class UserRestController {
     }
 
     @Secured("ROLE_USER")
-    //@Secured({"ROLE_OPERATOR", "ROLE_USER"})
     @GetMapping(value = "/{login}")
     public ResponseEntity<UserDTO> getByLogin(@PathVariable String login) {
-
-        System.out.println("id is " + securityService.getLoggedInUserId() + ", username is " + securityService.getLoggedInUsername());
-
         UserDTO userDTO;
         try {
             userDTO = userService.getUserDTO(login);
@@ -63,5 +58,53 @@ public class UserRestController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    }
+
+    @Secured("ROLE_USER")
+    @PutMapping(value = "/login/{newLogin}")
+    public ResponseEntity<UserDTO> updateLogin(@PathVariable String newLogin) {
+        String oldLogin = securityService.getLoggedInUsername();
+        try {
+            userService.updateLogin(oldLogin, newLogin);
+        } catch (ServiceException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Secured("ROLE_USER")
+    @PutMapping(value = "/region/{newLogin}")
+    public ResponseEntity<UserDTO> updateRegion(@PathVariable Integer newRegion) {
+        Long userId = securityService.getLoggedInUserId();
+        try {
+            userService.updateRegion(userId, newRegion);
+        } catch (ServiceException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Secured("ROLE_USER")
+    @PutMapping(value = "/password/{newPassword}")
+    public ResponseEntity<UserDTO> updateRegion(@PathVariable String newPassword) {
+        Long userId = securityService.getLoggedInUserId();
+        try {
+            userService.updatePassword(userId, newPassword);
+        } catch (ServiceException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Secured("ROLE_USER")
+    @DeleteMapping(value = "")
+    public ResponseEntity delete() {
+        try {
+            Long userId = securityService.getLoggedInUserId();
+            userService.deleteById(userId);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

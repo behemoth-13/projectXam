@@ -38,6 +38,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user.getLogin().equals("Admin")) {
             grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_ADMIN));
         }
-        return new UserDetailsImpl(user.getLogin(), user.getPassword(), grantedAuthorities, user.getId());
+        return new UserDetailsImpl(user.getId(), user.getLogin(), user.getPassword(), grantedAuthorities);
     }
 }

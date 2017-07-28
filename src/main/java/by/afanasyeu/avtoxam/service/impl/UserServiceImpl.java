@@ -53,11 +53,11 @@ public class UserServiceImpl implements UserService{
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
-    public void updateRegion(Long id, Integer region) throws ServiceException {
-        if (regionMapper.isExistRegion(region)) {
-            userMapper.updateRegion(id, region);
+    public void updateRegion(Long userId, Integer newRegion) throws ServiceException {
+        if (regionMapper.isExistRegion(newRegion)) {
+            userMapper.updateRegion(userId, newRegion);
         } else {
-            throw new ServiceException("Region not exist. userId: " + id + ". regionId: " + region);
+            throw new ServiceException("Region not exist. userId: " + userId + ". regionId: " + newRegion);
         }
     }
 

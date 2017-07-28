@@ -19,5 +19,4 @@ public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
             throws ServletException, IOException {
         // You can do something here for which is success requests
     }
-
 }
