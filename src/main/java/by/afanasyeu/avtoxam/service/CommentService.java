@@ -2,6 +2,7 @@ package by.afanasyeu.avtoxam.service;
 
 import by.afanasyeu.avtoxam.dao.entities.Comment;
 import by.afanasyeu.avtoxam.dao.entities.DTO.CommentDTO;
+import by.afanasyeu.avtoxam.service.exception.ServiceException;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public interface CommentService {
     void insertComment(Comment comment);
-    List<CommentDTO> getFirsts(Long messageId, Long userId, Integer countFirst);
-    List<CommentDTO> getFromInterval(Long messageId, Long first, Integer count, Long userId);
+    List<CommentDTO> getFirsts(Long messageId, Long userId, Integer countFirst) throws ServiceException;
+    List<CommentDTO> getFromInterval(Long messageId, Long first, Integer count, Long userId) throws ServiceException;
     void deleteByCommentIdUserId(Long commentId, Long userId);
 }

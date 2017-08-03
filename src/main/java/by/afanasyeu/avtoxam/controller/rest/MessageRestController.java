@@ -34,6 +34,8 @@ public class MessageRestController {
     @Secured("ROLE_USER")
     @PostMapping(value = "")
     public ResponseEntity insertMessage(@RequestBody Message message) {
+        Long userId = securityService.getLoggedInUserId();
+        message.setUserId(userId);
         try {
             messageService.insertMessage(message);
         } catch (Exception e) {
@@ -48,7 +50,6 @@ public class MessageRestController {
     @GetMapping(value = "")
     public ResponseEntity<List<MessageDTO>> getLastDefault() {
         return getLastFromService(COUNT_RETURNED);
-
     }
 
     @Secured("ROLE_USER")

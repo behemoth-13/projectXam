@@ -7,5 +7,4 @@ import by.afanasyeu.avtoxam.dao.entities.Favorite;
  */
 public interface FavoriteService {
     void insertFavorite(Favorite favorite);
-    void delete(Favorite favorite);
 }
