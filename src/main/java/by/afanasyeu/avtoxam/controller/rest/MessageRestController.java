@@ -6,9 +6,12 @@ import by.afanasyeu.avtoxam.security.SecurityService;
 import by.afanasyeu.avtoxam.service.MessageService;
 import by.afanasyeu.avtoxam.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,13 +30,22 @@ public class MessageRestController {
     @Autowired
     private SecurityService securityService;
 
+    @Autowired
+    @Qualifier("messageValidator")
+    private Validator messageValidator;
+
     private static final Integer COUNT_RETURNED = 20;
 
 
 
     @Secured("ROLE_USER")
     @PostMapping(value = "")
-    public ResponseEntity insertMessage(@RequestBody Message message) {
+    public ResponseEntity insertMessage(@RequestBody Message message, BindingResult result) {
+        messageValidator.validate(message, result);
+        if (result.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         Long userId = securityService.getLoggedInUserId();
         message.setUserId(userId);
         try {

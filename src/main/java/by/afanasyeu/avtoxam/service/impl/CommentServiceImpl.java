@@ -54,5 +54,9 @@ public class CommentServiceImpl implements CommentService{
         commentMapper.deleteByCommentIdUserId(commentId, userId);
     }
 
-
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    @Override
+    public Boolean isExistComment(Long id) {
+        return commentMapper.isExistComment(id);
+    }
 }

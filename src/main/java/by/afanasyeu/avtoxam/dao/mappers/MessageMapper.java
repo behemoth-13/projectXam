@@ -167,4 +167,7 @@ public interface MessageMapper {
     )
     List<MessageDTO> getFavoriteMessageFromInterval(@Param("first") Long first,
                                                     @Param("count") Integer count, @Param("userId") Long userId);
+
+    @Select("SELECT if(COUNT(*)>0,'true','false') FROM message WHERE id = #{id}")
+    Boolean isExistMessage(Long id);
 }

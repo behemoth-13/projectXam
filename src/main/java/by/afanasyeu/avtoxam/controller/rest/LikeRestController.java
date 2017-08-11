@@ -4,9 +4,12 @@ import by.afanasyeu.avtoxam.dao.entities.Like;
 import by.afanasyeu.avtoxam.security.SecurityService;
 import by.afanasyeu.avtoxam.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,9 +29,18 @@ public class LikeRestController {
     @Autowired
     private SecurityService securityService;
 
+    @Autowired
+    @Qualifier("likeValidator")
+    private Validator likeValidator;
+
     @Secured("ROLE_USER")
     @PostMapping(value = "")
-    public ResponseEntity insertLike(@RequestBody Like like) {
+    public ResponseEntity insertLike(@RequestBody Like like, BindingResult result) {
+        likeValidator.validate(like, result);
+        if (result.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         Long userId = securityService.getLoggedInUserId();
         like.setUserId(userId);
         try {

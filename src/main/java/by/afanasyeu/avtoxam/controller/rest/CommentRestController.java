@@ -6,9 +6,12 @@ import by.afanasyeu.avtoxam.security.SecurityService;
 import by.afanasyeu.avtoxam.service.CommentService;
 import by.afanasyeu.avtoxam.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,11 +30,20 @@ public class CommentRestController {
     @Autowired
     private SecurityService securityService;
 
+    @Autowired
+    @Qualifier("commentValidator")
+    private Validator commentValidator;
+
     private static final Integer COUNT_RETURNED = 20;
 
     @Secured("ROLE_USER")
     @PostMapping(value = "")
-    public ResponseEntity insertMessage(@RequestBody Comment comment) {
+    public ResponseEntity insertMessage(@RequestBody Comment comment, BindingResult result) {
+        commentValidator.validate(comment, result);
+        if (result.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         Long userId = securityService.getLoggedInUserId();
         comment.setUserId(userId);
         try {

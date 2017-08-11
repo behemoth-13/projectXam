@@ -16,7 +16,6 @@ public interface CommentMapper {
     @Insert("INSERT INTO comment(user_id, message_id, comment) VALUES "
             + "(#{userId}, #{messageId}, #{comment})")
     @Options(useGeneratedKeys=true,
-            keyProperty="id",
             flushCache= Options.FlushCachePolicy.DEFAULT,
             keyColumn="id")
     void insertComment(Comment comment);
@@ -60,4 +59,7 @@ public interface CommentMapper {
 
     @Delete("DELETE FROM comment WHERE id = #{commentId} AND user_id = #{userId}")
     void deleteByCommentIdUserId(@Param("commentId") Long commentId, @Param("userId") Long userId);
+
+    @Select("SELECT if(COUNT(*)>0,'true','false') FROM comment WHERE id = #{id}")
+    Boolean isExistComment(Long id);
 }

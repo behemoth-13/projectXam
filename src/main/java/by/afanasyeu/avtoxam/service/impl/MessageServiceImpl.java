@@ -95,4 +95,10 @@ public class MessageServiceImpl implements MessageService{
         }
         return messageMapper.getFavoriteMessageFromInterval(first, count, userId);
     }
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    @Override
+    public Boolean isExistMessage(Long id) {
+        return messageMapper.isExistMessage(id);
+    }
 }
