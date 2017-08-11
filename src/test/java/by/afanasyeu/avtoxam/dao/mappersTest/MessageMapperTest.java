@@ -106,7 +106,7 @@ public class MessageMapperTest {
 
     @Test
     public void getLastLikedMessageFromIntervalTest() {
-        List<MessageDTO> list = messageMapper.getLikedMessageFromInterval(2L, 1L, 1L);
+        List<MessageDTO> list = messageMapper.getLikedMessageFromInterval(2L, 1, 1L);
         MessageDTO messageDTO = list.get(0);
         assertTrue(messageDTO.getId() == 3);
         //assertTrue(messageDTO.getDateMessage().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));

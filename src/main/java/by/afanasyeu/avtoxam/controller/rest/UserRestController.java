@@ -6,10 +6,14 @@ import by.afanasyeu.avtoxam.security.SecurityService;
 import by.afanasyeu.avtoxam.service.UserService;
 import by.afanasyeu.avtoxam.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -37,9 +41,17 @@ public class UserRestController {
     @Autowired
     private SecurityService securityService;
 
+    @Autowired
+    @Qualifier("userValidator")
+    private Validator userValidator;
+
     @PreAuthorize("permitAll")
     @PostMapping(value = "")
-    public ResponseEntity create(@RequestBody User user) {
+    public ResponseEntity create(@RequestBody User user, BindingResult result) {
+        userValidator.validate(user, result);
+        if (result.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         try {
             userService.insertUser(user);
         } catch (Exception e) {
@@ -55,7 +67,7 @@ public class UserRestController {
         try {
             userDTO = userService.getUserDTO(login);
         } catch (ServiceException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
@@ -73,13 +85,13 @@ public class UserRestController {
     }
 
     @Secured("ROLE_USER")
-    @PutMapping(value = "/region/{newLogin}")
+    @PutMapping(value = "/region/{newRegion}")
     public ResponseEntity<UserDTO> updateRegion(@PathVariable Integer newRegion) {
         Long userId = securityService.getLoggedInUserId();
         try {
             userService.updateRegion(userId, newRegion);
         } catch (ServiceException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -91,7 +103,7 @@ public class UserRestController {
         try {
             userService.updatePassword(userId, newPassword);
         } catch (ServiceException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

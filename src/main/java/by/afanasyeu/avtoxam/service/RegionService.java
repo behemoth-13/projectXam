@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface RegionService {
     List<RegionDTO> getRegionsByCountryId(Integer countryId) throws ServiceException;
+    Boolean isExistRegion(Integer regionId);
 }

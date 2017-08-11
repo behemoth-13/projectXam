@@ -31,4 +31,10 @@ public class RegionServiceImpl implements RegionService {
             throw new ServiceException("Regions not founded by countryId. CountryId: " + countryId + ".");
         }
     }
+
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Override
+    public Boolean isExistRegion(Integer regionId) {
+        return regionMapper.isExistRegion(regionId);
+    }
 }
