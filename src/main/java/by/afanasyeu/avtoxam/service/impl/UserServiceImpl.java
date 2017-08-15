@@ -14,16 +14,20 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 /**
- * Created by Afanasyeu Alexei on 09.07.2017.
+ * @author Afanasyeu Alexei
  */
 
 @Service
 public class UserServiceImpl implements UserService{
 
+    private final UserMapper userMapper;
+    private final RegionMapper regionMapper;
+
     @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private RegionMapper regionMapper;
+    public UserServiceImpl(UserMapper userMapper, RegionMapper regionMapper) {
+        this.userMapper = userMapper;
+        this.regionMapper = regionMapper;
+    }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override

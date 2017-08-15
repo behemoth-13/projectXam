@@ -10,15 +10,19 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Created by Afanasyeu Alexei on 12.07.2017.
+ * @author Afanasyeu Alexei
  */
 
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 @Service
 public class FavoriteServiceImpl implements FavoriteService{
 
+    private final FavoriteMapper favoriteMapper;
+
     @Autowired
-    private FavoriteMapper favoriteMapper;
+    public FavoriteServiceImpl(FavoriteMapper favoriteMapper) {
+        this.favoriteMapper = favoriteMapper;
+    }
 
     @Override
     public void insertFavorite(Favorite favorite) {

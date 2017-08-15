@@ -9,14 +9,18 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- * Created by Afanasyeu Alexei on 11.08.2017.
+ * @author Afanasyeu Alexei
  */
 
 @Component("commentValidator")
 public class CommentValidator implements Validator {
 
+    private final MessageService messageService;
+
     @Autowired
-    private MessageService messageService;
+    public CommentValidator(MessageService messageService) {
+        this.messageService = messageService;
+    }
 
     @Override
     public boolean supports(Class<?> aClass) {

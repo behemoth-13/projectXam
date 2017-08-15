@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Created by Afanasyeu Alexei on 09.07.2017.
+ * Используется для обращения к БД
+ * @author Afanasyeu Alexei
  */
 
 @Repository
@@ -38,7 +39,10 @@ public interface CommentMapper {
     List<CommentDTO> getFirsts(@Param("messageId") Long messageId, @Param("userId") Long userId,
                                @Param("countFirst")Integer countFirst);
 
-    //прямой порядок, усли first = 2, то list начинается с 3
+    /**
+     * Прямой порядок, если first = 2, то list начинается с 3
+     */
+
     @Select(
             "SELECT c.id AS id, c.date_comment AS dateComment, c.comment AS comment, u.login AS userLogin, " +
                     "COUNT(DISTINCT l.id) AS countLike, COUNT(DISTINCT d.id) AS countDisLike, " +

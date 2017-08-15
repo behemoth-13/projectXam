@@ -1,10 +1,16 @@
 package by.afanasyeu.avtoxam.dao.entities;
 
 /**
- * Created by Afanasyeu Alexei on 28.06.2017.
+ * Используется для передачи в обе стороны(сервер и клиент)
+ * @author Afanasyeu Alexei
  */
 public class Favorite {
     private Long id;
+
+    /**
+     * Присваивается сервером.
+     * @see by.afanasyeu.avtoxam.controller.rest.FavoriteRestController
+     */
     private Long userId;
     private Long messageId;
 

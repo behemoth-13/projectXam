@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Afanasyeu Alexei on 23.07.2017.
+ * Переопределение успешного прохождения аутентификации
+ * @author Afanasyeu Alexei
  */
 public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
@@ -17,6 +18,6 @@ public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
     public void onAuthenticationSuccess(final HttpServletRequest request,
                                         final HttpServletResponse response, final Authentication authentication)
             throws ServletException, IOException {
-        // You can do something here for which is success requests
+        // Возможно добавить логирование при необходимости
     }
 }

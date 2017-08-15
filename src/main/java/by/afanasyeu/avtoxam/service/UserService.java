@@ -5,7 +5,7 @@ import by.afanasyeu.avtoxam.dao.entities.User;
 import by.afanasyeu.avtoxam.service.exception.ServiceException;
 
 /**
- * Created by Afanasyeu Alexei on 09.07.2017.
+ * @author Afanasyeu Alexei
  */
 
 public interface UserService {

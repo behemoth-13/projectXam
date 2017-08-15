@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Created by Afanasyeu Alexei on 12.07.2017.
+ * @author Afanasyeu Alexei
  */
 
 @Service
@@ -21,8 +21,12 @@ public class MessageServiceImpl implements MessageService{
 
     private static final Integer COUNT_LIMIT = 100;
 
+    private final MessageMapper messageMapper;
+
     @Autowired
-    private MessageMapper messageMapper;
+    public MessageServiceImpl(MessageMapper messageMapper) {
+        this.messageMapper = messageMapper;
+    }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override

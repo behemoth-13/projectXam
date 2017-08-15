@@ -4,7 +4,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by Afanasyeu Alexei on 23.07.2017.
+ * Служит для взятия login, id у пользователя, успешно прошедшего аутентификацию
+ * и выполняющего запрос
+ * @author Afanasyeu Alexei
  */
 @Service
 public class SecurityServiceImpl implements SecurityService {

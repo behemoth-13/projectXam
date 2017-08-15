@@ -8,19 +8,22 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Created by Afanasyeu Alexei on 04.07.2017.
+ * Используется для обращения к БД
+ * @author Afanasyeu Alexei
  */
 @Repository
 public interface MessageMapper {
+
     @Insert("INSERT INTO message(user_id, message) VALUES "
             + "(#{userId}, #{message})")
     @Options(useGeneratedKeys=true,
-            keyProperty="id",
             flushCache= Options.FlushCachePolicy.DEFAULT,
             keyColumn="id")
     void insertMessage(Message message);
 
-    //обратный порядок
+    /**
+     * Обратный порядок
+     */
     @Select(
             "SELECT m.id AS id, m.date_message AS dateMessage, m.message AS message, u.login AS userLogin, " +
             "COUNT(DISTINCT l.id) AS countLike, COUNT(DISTINCT d.id) AS countDisLike, COUNT(DISTINCT c.id) AS countComment, " +
@@ -47,11 +50,19 @@ public interface MessageMapper {
     @Results()
     List<MessageDTO> getLasts (@Param("countLast") Integer countLast, @Param("userId") Long userId);
 
-    //удаляет сообщения и комментарии к нему
+    /**
+     * Удаляет сообщения и комментарии к нему
+     */
     @Delete("DELETE FROM message WHERE id = #{messageId} AND user_id = #{userId}")
     void deleteByMessageIdUserId (@Param("messageId") Long messageId, @Param("userId") Long userId);
 
-    //прямой порядок. Начинается с first и на количество count
+    /**
+     * Прямой порядок. Начинается с first и на количество count
+     * @param first первое сообщение
+     * @param count количество сообщений
+     * @param userId id пользователя, который выполняет запрос
+     * @return List{@link MessageDTO}
+     */
     @Select(
             "SELECT m.id AS id, m.date_message AS dateMessage, m.message AS message, u.login AS userLogin, " +
                     "COUNT(DISTINCT l.id) AS countLike, COUNT(DISTINCT d.id) AS countDisLike, COUNT(DISTINCT c.id) AS countComment, " +
@@ -79,11 +90,15 @@ public interface MessageMapper {
     List<MessageDTO> getFromInterval(@Param("first") Long first, @Param("count") Integer count,
                                      @Param("userId") Long userId);
 
-    //сколько сообщений начиная с указанного id
+    /**
+     * Сколько сообщений начиная с указанного id
+     */
     @Select("SELECT COUNT(id) from message WHERE id > #{messageIdSince}")
     Integer getCountSinceById (Long messageIdSince);
 
-    //обратный порядок
+    /**
+     * обратный порядок
+     */
     @Select(
             "SELECT m.id AS id, m.date_message AS dateMessage, m.message AS message, u.login AS userLogin, " +
                     "COUNT(DISTINCT l.id) AS countLike, COUNT(DISTINCT d.id) AS countDisLike, COUNT(DISTINCT c.id) AS countComment, " +
@@ -103,7 +118,9 @@ public interface MessageMapper {
     )
     List<MessageDTO> getLastLikedMessage(@Param("countLast") Integer countLast, @Param("userId") Long userId);
 
-    //прямой порядок. Начинается с first и на количество count
+    /**
+     * прямой порядок. Начинается с first и на количество count
+     */
     @Select(
             "SELECT m.id AS id, m.date_message AS dateMessage, m.message AS message, u.login AS userLogin, " +
                     "COUNT(DISTINCT l.id) AS countLike, COUNT(DISTINCT d.id) AS countDisLike, COUNT(DISTINCT c.id) AS countComment, " +
@@ -125,7 +142,9 @@ public interface MessageMapper {
     List<MessageDTO> getLikedMessageFromInterval(@Param("first") Long first, @Param("count") Integer count,
                                                  @Param("userId") Long userId);
 
-    //обратный порядок
+    /**
+     * обратный порядок
+     */
     @Select(
             "SELECT m.id AS id, m.date_message AS dateMessage, m.message AS message, u.login AS userLogin, " +
                     "COUNT(DISTINCT l.id) AS countLike, COUNT(DISTINCT d.id) AS countDisLike, COUNT(DISTINCT c.id) AS countComment, " +
@@ -146,7 +165,9 @@ public interface MessageMapper {
     )
     List<MessageDTO> getLastFavoriteMessage(@Param("countLast") Integer countLast, @Param("userId") Long userId);
 
-    //прямой порядок. Начинается с first и на количество count
+    /**
+     * прямой порядок. Начинается с first и на количество count
+     */
     @Select(
             "SELECT m.id AS id, m.date_message AS dateMessage, m.message AS message, u.login AS userLogin, " +
                     "COUNT(DISTINCT l.id) AS countLike, COUNT(DISTINCT d.id) AS countDisLike, COUNT(DISTINCT c.id) AS countComment, " +

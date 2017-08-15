@@ -16,7 +16,8 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Created by Afanasyeu Alexei on 20.07.2017.
+ * Controller для операций с {@link User} и {@link UserDTO}
+ * @author Afanasyeu Alexei
  */
 
 //curl -H "Content-Type:application/json" -X POST -d '{"id":null,"region":1,"login":"через debug","password":"passDebug","regDate":null}' http://localhost:8080/rest/user
@@ -34,15 +35,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/rest/user")
 public class UserRestController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    private final SecurityService securityService;
+
+    private final Validator userValidator;
 
     @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    @Qualifier("userValidator")
-    private Validator userValidator;
+    public UserRestController(UserService userService, SecurityService securityService, @Qualifier("userValidator") Validator userValidator) {
+        this.userService = userService;
+        this.securityService = securityService;
+        this.userValidator = userValidator;
+    }
 
     @PreAuthorize("permitAll")
     @PostMapping(value = "")

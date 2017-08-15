@@ -16,22 +16,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by Afanasyeu Alexei on 03.08.2017.
+ * Controller для операций с {@link Like}
+ * @author Afanasyeu Alexei
  */
 
 @RestController
 @RequestMapping("/rest/like")
 public class LikeRestController {
 
-    @Autowired
-    private LikeService likeService;
+    private final LikeService likeService;
+
+    private final SecurityService securityService;
+
+    private final Validator likeValidator;
 
     @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    @Qualifier("likeValidator")
-    private Validator likeValidator;
+    public LikeRestController(LikeService likeService, SecurityService securityService, @Qualifier("likeValidator") Validator likeValidator) {
+        this.likeService = likeService;
+        this.securityService = securityService;
+        this.likeValidator = likeValidator;
+    }
 
     @Secured("ROLE_USER")
     @PostMapping(value = "")

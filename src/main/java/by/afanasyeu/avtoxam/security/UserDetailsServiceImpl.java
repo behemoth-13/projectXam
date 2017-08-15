@@ -16,15 +16,30 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Afanasyeu Alexei on 22.07.2017.
+ * Предоставляется права пользователям,
+ *  участвует в аутентификации.
+ *
+ *
+ * @author Afanasyeu Alexei
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     private static final String ROLE_USER = "ROLE_USER";
+
+    /**
+     * Присваивается пользователю с именем
+     * {@value ADMIN_NAME}
+     */
     private static final String ROLE_ADMIN = "ROLE_ADMIN";
 
+    private static final String ADMIN_NAME = "Admin";
+
+    private final UserMapper userMapper;
+
     @Autowired
-    private UserMapper userMapper;
+    public UserDetailsServiceImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -35,7 +50,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_USER));
-        if (user.getLogin().equals("Admin")) {
+        if (user.getLogin().equals(ADMIN_NAME)) {
             grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_ADMIN));
         }
         return new UserDetailsImpl(user.getId(), user.getLogin(), user.getPassword(), grantedAuthorities);

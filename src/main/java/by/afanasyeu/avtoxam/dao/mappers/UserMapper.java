@@ -6,7 +6,8 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by Afanasyeu Alexei on 28.06.2017.
+ * Используется для обращения к БД
+ * @author Afanasyeu Alexei
  */
 
 @Repository
@@ -14,7 +15,6 @@ public interface UserMapper {
         @Insert("INSERT INTO user(region, login, password, reg_date) VALUES"
                 + "(#{region}, #{login}, #{password}, #{regDate})")
         @Options(useGeneratedKeys=true,
-                keyProperty="id",
                 flushCache=Options.FlushCachePolicy.DEFAULT,
                 keyColumn="id")
         void insertUser(User user);

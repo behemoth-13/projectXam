@@ -9,17 +9,21 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 /**
- * Created by Afanasyeu Alexei on 11.08.2017.
+ * @author Afanasyeu Alexei
  */
 
 @Component("likeValidator")
 public class LikeValidator implements Validator {
 
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
+
+    private final CommentService commentService;
 
     @Autowired
-    private CommentService commentService;
+    public LikeValidator(MessageService messageService, CommentService commentService) {
+        this.messageService = messageService;
+        this.commentService = commentService;
+    }
 
     @Override
     public boolean supports(Class<?> aClass) {

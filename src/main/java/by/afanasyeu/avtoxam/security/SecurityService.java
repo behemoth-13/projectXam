@@ -1,7 +1,8 @@
 package by.afanasyeu.avtoxam.security;
 
 /**
- * Created by Afanasyeu Alexei on 23.07.2017.
+ * @see by.afanasyeu.avtoxam.security.SecurityServiceImpl
+ * @author Afanasyeu Alexei
  */
 public interface SecurityService {
     String getLoggedInUsername();

@@ -8,14 +8,14 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by Afanasyeu Alexei on 08.07.2017.
+ * Используется для обращения к БД
+ * @author Afanasyeu Alexei
  */
 @Repository
 public interface DisLikeMapper {
     @Insert("INSERT INTO `dis_like`(user_id, message_id, comment_id) " +
             "VALUES (#{userId}, #{messageId}, #{commentId})")
     @Options(useGeneratedKeys=true,
-            keyProperty="id",
             flushCache=Options.FlushCachePolicy.DEFAULT,
             keyColumn="id")
     void insertDisLike(Like disLike);

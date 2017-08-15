@@ -1,23 +1,42 @@
 package by.afanasyeu.avtoxam.dao.entities.DTO;
 
-import java.util.Date;
+import by.afanasyeu.avtoxam.dao.entities.Like;
 
 /**
- * Created by Afanasyeu Alexei on 04.07.2017.
+ * Используется для передачи на клиент
+ * @see by.afanasyeu.avtoxam.dao.entities.Comment
+ * @author Afanasyeu Alexei
  */
+
 public class CommentDTO {
     private Long id;
     private String dateComment;
     private String comment;
-    private String userLogin;
-    private Integer countLike;
-    private Integer countDisLike;
-    private Character status;
 
-    /*status
-    null - лайк нет, дизлайк нет;
-    a - лайк нет, дизлайк да;
-    b - лайк да, дизлайк нет;*/
+    /** Берется из БД. Из таблицы `user.login` где comment.user_id = user.id
+     * @see by.afanasyeu.avtoxam.dao.mappers.CommentMapper
+     */
+    private String userLogin;
+
+    /** Берется из БД. Количество {@link Like} из таблицы `like` где like.comment_id = comment.id
+     * @see by.afanasyeu.avtoxam.dao.mappers.CommentMapper
+     */
+    private Integer countLike;
+
+    /** Берется из БД. Количество disLike({@link Like}) из таблицы `dis_like` где dis_like.comment_id = comment.id
+     * @see by.afanasyeu.avtoxam.dao.mappers.CommentMapper
+     */
+    private Integer countDisLike;
+
+    /**
+     * status <br/>
+     * null - лайк нет, дизлайк нет; <br/>
+     * a - лайк нет, дизлайк да; <br/>
+     * b - лайк да, дизлайк нет; <br/>
+     *
+     * @see by.afanasyeu.avtoxam.dao.mappers.CommentMapper
+     */
+    private Character status;
 
     public CommentDTO() {
     }

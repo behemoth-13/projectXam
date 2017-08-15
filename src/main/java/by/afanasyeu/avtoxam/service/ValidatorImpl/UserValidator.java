@@ -11,16 +11,19 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- * Created by Afanasyeu Alexei on 04.08.2017.
+ * @author Afanasyeu Alexei
  */
 @Component("userValidator")
 public class UserValidator implements Validator {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final RegionService regionService;
 
     @Autowired
-    private RegionService regionService;
+    public UserValidator(UserService userService, RegionService regionService) {
+        this.userService = userService;
+        this.regionService = regionService;
+    }
 
     @Override
     public boolean supports(Class<?> aClass) {

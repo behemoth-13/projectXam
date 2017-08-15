@@ -2,6 +2,7 @@ package by.afanasyeu.avtoxam.controller.rest;
 
 import by.afanasyeu.avtoxam.dao.entities.Country;
 import by.afanasyeu.avtoxam.service.CountryService;
+import by.afanasyeu.avtoxam.service.impl.CountryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,15 +14,23 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Created by Afanasyeu Alexei on 03.08.2017.
+ * Controller для операций с {@link Country}
+ * @author Afanasyeu Alexei
  */
 
 @RestController
 @RequestMapping("/rest/country")
 public class CountryRestController {
 
+    /**
+     *
+     */
+    private final CountryService countryService;
+
     @Autowired
-    private CountryService countryService;
+    public CountryRestController(CountryService countryService) {
+        this.countryService = countryService;
+    }
 
     @PreAuthorize("permitAll")
     @GetMapping(value = "")

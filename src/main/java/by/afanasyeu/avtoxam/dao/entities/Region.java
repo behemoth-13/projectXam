@@ -1,7 +1,8 @@
 package by.afanasyeu.avtoxam.dao.entities;
 
 /**
- * Created by Afanasyeu Alexei on 28.06.2017.
+ * @see by.afanasyeu.avtoxam.dao.entities.DTO.RegionDTO
+ * @author Afanasyeu Alexei
  */
 public class Region {
     private Integer id;

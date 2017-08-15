@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Afanasyeu Alexei on 23.07.2017.
+ * Переопределение отказа в доступе.
+ * @author Afanasyeu Alexei
  */
 public class RestAuthenticationAccessDeniedHandler implements AccessDeniedHandler {
 

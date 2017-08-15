@@ -3,7 +3,7 @@ package by.afanasyeu.avtoxam.service;
 import by.afanasyeu.avtoxam.dao.entities.Favorite;
 
 /**
- * Created by Afanasyeu Alexei on 12.07.2017.
+ * @author Afanasyeu Alexei
  */
 public interface FavoriteService {
     void insertFavorite(Favorite favorite);

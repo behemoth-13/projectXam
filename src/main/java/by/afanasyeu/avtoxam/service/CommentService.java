@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Created by Afanasyeu Alexei on 12.07.2017.
+ * @author Afanasyeu Alexei
  */
 public interface CommentService {
     void insertComment(Comment comment);

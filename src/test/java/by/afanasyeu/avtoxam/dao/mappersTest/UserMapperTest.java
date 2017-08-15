@@ -21,7 +21,7 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 
 
 /**
- * Created by Afanasyeu Alexei on 28.06.2017.
+ * @author Afanasyeu Alexei
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -96,7 +96,7 @@ public class UserMapperTest {
         assertTrue(userDTO.getCountry().equals("Беларусь"));
         assertTrue(userDTO.getRegion().equals("Минск"));
         assertTrue(userDTO.getLogin().equals("Логин1"));
-        assertTrue(userDTO.getRegDate().toString().equals("Sat Jun 24 20:00:02 MSK 2017"));
+        assertTrue(userDTO.getRegDate().equals("Sat Jun 24 20:00:02 MSK 2017"));
     }
 
     @Test

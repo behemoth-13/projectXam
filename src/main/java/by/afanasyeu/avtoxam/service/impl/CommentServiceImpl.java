@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Created by Afanasyeu Alexei on 12.07.2017.
+ * @author Afanasyeu Alexei
  */
 
 @Service
@@ -21,8 +21,12 @@ public class CommentServiceImpl implements CommentService{
 
     private static final Integer COUNT_LIMIT = 100;
 
+    private final CommentMapper commentMapper;
+
     @Autowired
-    private CommentMapper commentMapper;
+    public CommentServiceImpl(CommentMapper commentMapper) {
+        this.commentMapper = commentMapper;
+    }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override

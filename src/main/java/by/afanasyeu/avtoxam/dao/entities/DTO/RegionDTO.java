@@ -1,7 +1,9 @@
 package by.afanasyeu.avtoxam.dao.entities.DTO;
 
 /**
- * Created by Afanasyeu Alexei on 04.07.2017.
+ * Используется для передачи на клиента
+ * @see by.afanasyeu.avtoxam.dao.entities.Region
+ * @author Afanasyeu Alexei
  */
 public class RegionDTO {
     private Integer id;
@@ -34,8 +36,7 @@ public class RegionDTO {
 
         RegionDTO regionDTO = (RegionDTO) o;
 
-        if (id != null ? !id.equals(regionDTO.id) : regionDTO.id != null) return false;
-        return region != null ? region.equals(regionDTO.region) : regionDTO.region == null;
+        return (id != null ? id.equals(regionDTO.id) : regionDTO.id == null) && (region != null ? region.equals(regionDTO.region) : regionDTO.region == null);
     }
 
     @Override

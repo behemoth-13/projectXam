@@ -1,7 +1,7 @@
 package by.afanasyeu.avtoxam.service.exception;
 
 /**
- * Created by Afanasyeu Alexei on 09.07.2017.
+ * @author Afanasyeu Alexei
  */
 public class ServiceException extends Exception{
     public ServiceException(String msg) {

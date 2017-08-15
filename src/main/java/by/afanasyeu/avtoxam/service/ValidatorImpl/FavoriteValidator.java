@@ -8,14 +8,18 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 /**
- * Created by Afanasyeu Alexei on 11.08.2017.
+ * @author Afanasyeu Alexei
  */
 
 @Component("favoriteValidator")
 public class FavoriteValidator implements Validator{
 
+    private final MessageService messageService;
+
     @Autowired
-    private MessageService messageService;
+    public FavoriteValidator(MessageService messageService) {
+        this.messageService = messageService;
+    }
 
     @Override
     public boolean supports(Class<?> aClass) {

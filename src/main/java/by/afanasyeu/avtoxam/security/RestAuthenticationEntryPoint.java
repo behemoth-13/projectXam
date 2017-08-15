@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Afanasyeu Alexei on 23.07.2017.
+ * Переопределение точки входа
+ * @author Afanasyeu Alexei
  */
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {

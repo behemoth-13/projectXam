@@ -1,7 +1,8 @@
 package by.afanasyeu.avtoxam.dao.entities;
 
 /**
- * Created by Afanasyeu Alexei on 28.06.2017.
+ * Используется для передачи на клиент.
+ * @author Afanasyeu Alexei
  */
 public class Country {
     private Integer id;

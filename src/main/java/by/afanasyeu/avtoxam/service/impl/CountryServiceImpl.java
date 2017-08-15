@@ -11,14 +11,18 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Created by Afanasyeu Alexei on 12.07.2017.
+ * @author Afanasyeu Alexei
  */
 
 @Service
 public class CountryServiceImpl implements CountryService{
 
+    private final CountryMapper countryMapper;
+
     @Autowired
-    private CountryMapper countryMapper;
+    public CountryServiceImpl(CountryMapper countryMapper) {
+        this.countryMapper = countryMapper;
+    }
 
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     @Override

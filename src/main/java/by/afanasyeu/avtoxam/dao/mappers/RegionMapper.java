@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Created by Afanasyeu Alexei on 04.07.2017.
+ * Используется для обращения к БД
+ * @author Afanasyeu Alexei
  */
 @Repository
 public interface RegionMapper {

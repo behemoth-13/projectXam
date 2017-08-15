@@ -10,16 +10,21 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Created by Afanasyeu Alexei on 12.07.2017.
+ * @author Afanasyeu Alexei
  */
 
 @Service
 public class DisLikeServiceImpl implements DisLikeService{
 
+    private final DisLikeMapper disLikeMapper;
+
+    private final LikeMapper likeMapper;
+
     @Autowired
-    private DisLikeMapper disLikeMapper;
-    @Autowired
-    private LikeMapper likeMapper;
+    public DisLikeServiceImpl(DisLikeMapper disLikeMapper, LikeMapper likeMapper) {
+        this.disLikeMapper = disLikeMapper;
+        this.likeMapper = likeMapper;
+    }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override

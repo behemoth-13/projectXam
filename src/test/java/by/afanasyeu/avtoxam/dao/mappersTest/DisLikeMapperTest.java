@@ -16,7 +16,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TE
 import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 
 /**
- * Created by Afanasyeu Alexei on 08.07.2017.
+ * @author Afanasyeu Alexei
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring-test-config.xml" })

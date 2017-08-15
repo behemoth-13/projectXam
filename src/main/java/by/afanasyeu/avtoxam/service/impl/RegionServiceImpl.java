@@ -12,14 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Created by Afanasyeu Alexei on 10.07.2017.
+ * @author Afanasyeu Alexei
  */
 
 @Service
 public class RegionServiceImpl implements RegionService {
 
+    private final RegionMapper regionMapper;
+
     @Autowired
-    private RegionMapper regionMapper;
+    public RegionServiceImpl(RegionMapper regionMapper) {
+        this.regionMapper = regionMapper;
+    }
 
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     @Override

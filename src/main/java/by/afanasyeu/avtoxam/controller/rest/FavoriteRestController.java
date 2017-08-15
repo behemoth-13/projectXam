@@ -16,22 +16,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by Afanasyeu Alexei on 03.08.2017.
+ * Controller для операций с {@link Favorite}
+ * @author Afanasyeu Alexei
  */
 
 @RestController
 @RequestMapping("/rest/favorite")
 public class FavoriteRestController {
 
-    @Autowired
-    private FavoriteService favoriteService;
+    private final FavoriteService favoriteService;
+
+    private final SecurityService securityService;
+
+    private final Validator favoriteValidator;
 
     @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    @Qualifier("favoriteValidator")
-    private Validator favoriteValidator;
+    public FavoriteRestController(FavoriteService favoriteService, SecurityService securityService, @Qualifier("favoriteValidator") Validator favoriteValidator) {
+        this.favoriteService = favoriteService;
+        this.securityService = securityService;
+        this.favoriteValidator = favoriteValidator;
+    }
 
     @Secured("ROLE_USER")
     @PostMapping(value = "")

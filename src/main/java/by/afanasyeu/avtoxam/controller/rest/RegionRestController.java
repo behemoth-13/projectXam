@@ -15,15 +15,20 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Created by Afanasyeu Alexei on 28.07.2017.
+ * Controller для операций с List<{@link RegionDTO}>
+ * @author Afanasyeu Alexei
  */
 
 @RestController
 @RequestMapping("/rest/region")
 public class RegionRestController {
 
+    private final RegionService regionService;
+
     @Autowired
-    private RegionService regionService;
+    public RegionRestController(RegionService regionService) {
+        this.regionService = regionService;
+    }
 
     @PreAuthorize("permitAll")
     @GetMapping(value = "/{countryId}")

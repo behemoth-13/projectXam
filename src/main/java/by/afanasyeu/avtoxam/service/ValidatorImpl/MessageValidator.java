@@ -7,7 +7,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- * Created by Afanasyeu Alexei on 11.08.2017.
+ * @author Afanasyeu Alexei
  */
 
 @Component("messageValidator")

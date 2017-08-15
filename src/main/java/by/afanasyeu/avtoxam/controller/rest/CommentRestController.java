@@ -17,24 +17,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Created by Afanasyeu Alexei on 03.08.2017.
+ * Controller для операций с {@link Comment}
+ * @author Afanasyeu Alexei
  */
 
 @RestController
 @RequestMapping("/rest/comment")
 public class CommentRestController {
 
-    @Autowired
-    private CommentService commentService;
+    private final CommentService commentService;
 
-    @Autowired
-    private SecurityService securityService;
+    private final SecurityService securityService;
 
-    @Autowired
-    @Qualifier("commentValidator")
-    private Validator commentValidator;
+    private final Validator commentValidator;
 
     private static final Integer COUNT_RETURNED = 20;
+
+    @Autowired
+    public CommentRestController(CommentService commentService, SecurityService securityService, @Qualifier("commentValidator") Validator commentValidator) {
+        this.commentService = commentService;
+        this.securityService = securityService;
+        this.commentValidator = commentValidator;
+    }
 
     @Secured("ROLE_USER")
     @PostMapping(value = "")

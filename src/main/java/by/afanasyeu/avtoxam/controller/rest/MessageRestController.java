@@ -17,25 +17,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Created by Afanasyeu Alexei on 28.07.2017.
+ * Controller для операций с {@link Message} и {@link MessageDTO}
+ * @author Afanasyeu Alexei
  */
 
 @RestController
 @RequestMapping("/rest/message")
 public class MessageRestController {
 
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
 
-    @Autowired
-    private SecurityService securityService;
+    private final SecurityService securityService;
 
-    @Autowired
-    @Qualifier("messageValidator")
-    private Validator messageValidator;
+    private final Validator messageValidator;
 
     private static final Integer COUNT_RETURNED = 20;
 
+    @Autowired
+    public MessageRestController(MessageService messageService, SecurityService securityService, @Qualifier("messageValidator") Validator messageValidator) {
+        this.messageService = messageService;
+        this.securityService = securityService;
+        this.messageValidator = messageValidator;
+    }
 
 
     @Secured("ROLE_USER")
